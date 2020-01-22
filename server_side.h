@@ -1,11 +1,14 @@
 //
 // Created by sahar on 13/01/2020.
 //
-
+#include <stdio.h>
+#include <string.h>
 #include <iostream>
 #include <fstream>
+#include <unordered_map>
+#include "CacheManager.h"
 
-using namespace std
+using namespace std;
 
 #ifndef UNTITLED_SERVER_SIDE_H
 #define UNTITLED_SERVER_SIDE_H
@@ -13,8 +16,9 @@ using namespace std
 namespace server_side{
 
     class ClientHandler{
-        void handlerClien(&ofstream outputStream,&ifstream inputStream );
+        void handlerClient(ofstream outputStream,ifstream inputStream );
     };
+
     class Server: public ClientHandler{
         void open(int port){
 
@@ -32,25 +36,22 @@ namespace server_side{
 
     };
 
+
+
+
+
+
+
+
     class MyTestClientHandler: public ClientHandler{
+        FileCacheManager file_cache_manager;
         Solver solver(){
 
         }
-        void handlerClien(&ofstream outputStream,&ifstream inputStream );
+        void handlerClient(ofstream outputStream,ifstream inputStream );
     };
 
-    class CacheManager{
-        bool DoesSolutionExist();
-        void returnSolution();
-        void SaveSolution();
 
-    }
-
-    class FileCasheManager: public CacheManager{
-        bool DoesSolutionExist(string problem);
-        void returnSolution();
-        void SaveSolution();
-    }
 
 
 }
