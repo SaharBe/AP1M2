@@ -9,10 +9,9 @@
 #include <queue>
 #include <iostream>
 #include <vector>
-
-#include "server_side.h"
 #include "Searchable.h"
 #include "State.h"
+#include "Solver.h"
 
 
 template <class T>
@@ -24,11 +23,11 @@ private:
 
 public:
     Searcher(){
-        MyPriorityQueue = new queue<State<T>*>;
+        MyPriorityQueue =  new std::queue<State<T>*>;
         evaluatedNodes = 0;
     }
     //the search method
-    virtual Solver search (Searchable<T> searchable);
+    virtual T search (Searchable<T> searchable);
     //get how many nodes were evaluated by the algorithm
      int getNumberOfNodesEvaluated();
 

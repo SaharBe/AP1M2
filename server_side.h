@@ -1,10 +1,14 @@
-//
-// Created by sahar on 13/01/2020.
-//
 
+#include <stdio.h>
+#include <string.h>
 #include <iostream>
 #include <fstream>
-#include "Server.h"
+#include <unordered_map>
+#include "CacheManager.h"
+#include "Solver.h"
+
+
+
 using namespace std;
 
 #ifndef UNTITLED_SERVER_SIDE_H
@@ -12,56 +16,54 @@ using namespace std;
 
 
 
-
-    class ClientHandler{
+class ClientHandler{
     public:
-        void handlerClien(ofstream outputStream,ifstream inputStream );
+        void handlerClient(int outputStream,int inputStream );
     };
 
 
+class Server {
+public:
+    Server() = default;
+    virtual ~Server()= default;
 
-class MySerialServer: public server_side::Server{
+    virtual void open(int port,ClientHandler c) = 0;
+    virtual bool stop() = 0;
+};
+
+
+
+
+class MySerialServer: public Server{
     public:
-       virtual void open(int port);
+       virtual void open(int port,ClientHandler c);
        virtual  bool stop();
        virtual void start(int port);
-        void threadLoop(int port);
+        void threadLoop(int port,ClientHandler c);
        MySerialServer();
        ~MySerialServer();
 
         void start();
     };
 
-class MyParallelServer: public server_side::Server{
+class MyParallelServer: public Server{
 
-     };
+};
 
-    class Solver{
-    public:
-        void solve();
 
-    };
 
-   /* class MyTestClientHandler: public ClientHandler{
-        Solver solver();
+class MyTestClientHandler: public ClientHandler{
+    FileCacheManager file_cache_manager;
+    Solver* solver(){
 
-       // virtual  void handlerClien(&ofstream outputStream,&ifstream inputStream );
-    };*/
+    }
+    void handlerClient(int outputStream,int inputStream );
 
-    class CacheManager{
-    public:
-        bool DoesSolutionExist();
-        void returnSolution();
-        void SaveSolution();
+};
 
-    };
 
-    class FileCasheManager: public CacheManager{
-    public:
-        bool DoesSolutionExist(string problem);
-        void returnSolution();
-        void SaveSolution();
-    };
+
+
 
 
 

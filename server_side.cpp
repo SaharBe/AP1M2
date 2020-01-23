@@ -1,6 +1,3 @@
-//
-// Created by sahar on 13/01/2020.
-//
 
 #include <iostream>
 #include <thread>
@@ -9,28 +6,24 @@
 #include <unistd.h>
 #include <pthread.h>
 #include <time.h>
+#include "Solver.h"
 #include "server_side.h"
-
-
-
 
 
 using namespace std;
 
+//using namespace server_side;
 
+void MySerialServer:: threadLoop(int streamSocket,ClientHandler c){
 
-
-
-void MySerialServer:: threadLoop(int streamSocket){
-
-   clientHandler.handleClient(streamSocket,streamSocket);
+   c.handlerClient(streamSocket,streamSocket);
 
 
     }
 
 }
 
-void  MySerialServer :: open(int port){
+void  MySerialServer :: open(int port,ClientHandler c){
     int socketfd = socket(AF_INET,SOCK_STREAM,0);
     if(socketfd == -1){
         //error
@@ -64,7 +57,7 @@ void  MySerialServer :: open(int port){
             continue;
 
         }else {
-            std::thread t(&MySerialServer::threadLoop, this, client_socket);
+            std::thread t(&MySerialServer::threadLoop, this, client_socket,c);
             t.join();
         }
 
@@ -92,5 +85,31 @@ bool MySerialServer::stop() {
 
 void MySerialServer::start(int port) {
 
+}
+
+
+
+void MyTestClientHandler::handlerClient(int outputStream, int inputStream) {
+  while(true){
+    char question[1024];
+    int valRead = read(inputStream, question, 1024);
+    if(valRead ==-1){
+        cout << "error in reading" << endl;
+        return;
+    }
+    //if question in empty,the client didnt sent a question yet,keep waiting for it
+    if(strlen(question) == 0){
+      continue;
+    }
+    //if client sent in the stream "end",go back to server which waiting for other client
+    if(question == "end"){
+      break;
+    }
+    //else,there is a question and write the answer to the output stream
+    else{
+      string answer = file_cache_manager.returnSolution(question);
+      int valWrite = write(outputStream,answer.c_str(), answer.length());
+    }
+  }
 }
 
