@@ -1,60 +1,74 @@
-//
-// Created by sahar on 13/01/2020.
-//
+
 #include <stdio.h>
 #include <string.h>
 #include <iostream>
 #include <fstream>
 #include <unordered_map>
 #include "CacheManager.h"
+#include "Solver.h"
+#include "ObjectAdapter.h"
+
 
 using namespace std;
 
 #ifndef UNTITLED_SERVER_SIDE_H
 #define UNTITLED_SERVER_SIDE_H
 
-namespace server_side{
 
-    class ClientHandler{
-        void handlerClient(ofstream outputStream,ifstream inputStream );
-    };
 
-    class Server: public ClientHandler{
-        void open(int port){
-
-        }void stop(int port){}
-
-    };
-
-    class MySerialServer: public Server{
-
-    };
-    class MyParallelServer: public Server{};
-
-    class Solver{
-        void solve();
-
+class ClientHandler{
+    public:
+        void handlerClient(int outputStream,int inputStream );
     };
 
 
+class Server {
+public:
+    Server() = default;
+    virtual ~Server()= default;
+
+    virtual void open(int port,ClientHandler c) = 0;
+    virtual bool stop() = 0;
+};
 
 
 
 
+class MySerialServer: public Server{
+    public:
+       virtual void open(int port,ClientHandler c);
+       virtual  bool stop();
+       virtual void start(int port);
+        void threadLoop(int port,ClientHandler c);
+       MySerialServer();
+       ~MySerialServer();
 
-
-    class MyTestClientHandler: public ClientHandler{
-        FileCacheManager file_cache_manager;
-        Solver solver(){
-
-        }
-        void handlerClient(ofstream outputStream,ifstream inputStream );
+        void start();
     };
 
+class MyParallelServer: public Server{
+
+};
 
 
 
-}
+class MyTestClientHandler: public ClientHandler{
+    public:
+    CacheManager<string,string> file_cache_manager;
+    StringRevers stringRevers;
+
+
+    void WriteAnswerToClient(int outPutStream,string question);
+    void handlerClient(int outputStream,int inputStream );
+
+};
+
+
+
+
+
+
+
 
 
 
