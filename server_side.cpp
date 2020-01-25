@@ -8,26 +8,24 @@
 #include <time.h>
 #include "server_side.h"
 
-
-
-
+#include "Solver.h"
 
 using namespace std;
 
+//using namespace server_side;
 
+void MySerialServer:: threadLoop(int streamSocket,ClientHandler c){
 
+   c.handlerClient(streamSocket,streamSocket);
 
-
-void MySerialServer:: threadLoop(int streamSocket){
-
-   clientHandler.handleClient(streamSocket,streamSocket);
 
 
     }
 
 }
 
-void  MySerialServer :: open(int port){
+void  MySerialServer :: open(int port,ClientHandler c){
+
     int socketfd = socket(AF_INET,SOCK_STREAM,0);
     if(socketfd == -1){
         //error
@@ -61,7 +59,9 @@ void  MySerialServer :: open(int port){
             continue;
 
         }else {
-            std::thread t(&MySerialServer::threadLoop, this, client_socket);
+
+            std::thread t(&MySerialServer::threadLoop, this, client_socket,c);
+
             t.join();
         }
 
@@ -93,10 +93,16 @@ void MySerialServer::start(int port) {
 
 
 
-void MyTestClientHandler::handlerClient(ofstream outputStream, ifstream inputStream) {
+
+void MyTestClientHandler::handlerClient(int outputStream, int inputStream) {
   while(true){
     char question[1024];
-    inputStream.getline(question,1024);
+    int valRead = read(inputStream, question, 1024);
+    if(valRead ==-1){
+        cout << "error in reading" << endl;
+        return;
+    }
+
     //if question in empty,the client didnt sent a question yet,keep waiting for it
     if(strlen(question) == 0){
       continue;
@@ -107,9 +113,22 @@ void MyTestClientHandler::handlerClient(ofstream outputStream, ifstream inputStr
     }
     //else,there is a question and write the answer to the output stream
     else{
-      char answer[] = file_cache_manager.returnSolution(question);
-      outputStream.write(answer,answer.length());
+
+        WriteAnswerToClient(outputStream,question);
+
     }
   }
+}
+
+
+void MyTestClientHandler::WriteAnswerToClient(int outPutStream,string question) {
+    string answer;
+    if(file_cache_manager.DoesSolutionExist(question)) {
+        string answer = file_cache_manager.returnSolution(question);
+    }
+    else{
+        string answer = stringRevers.getstring(question);
+    }
+    int valWrite = write(outPutStream,answer.c_str(), answer.length());
 }
 

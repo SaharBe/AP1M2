@@ -5,7 +5,9 @@
 #include <fstream>
 #include <unordered_map>
 #include "CacheManager.h"
-#include "Server.h"
+#include "Solver.h"
+#include "ObjectAdapter.h"
+
 
 
 using namespace std;
@@ -15,64 +17,55 @@ using namespace std;
 
 
 
-
-
-    class ClientHandler{
+class ClientHandler{
     public:
-        void handlerClien(ofstream outputStream,ifstream inputStream );
+        void handlerClient(int outputStream,int inputStream );
     };
 
 
+class Server {
+public:
+    Server() = default;
+    virtual ~Server()= default;
 
-class MySerialServer: public server_side::Server{
+    virtual void open(int port,ClientHandler c) = 0;
+    virtual bool stop() = 0;
+};
+
+
+
+
+class MySerialServer: public Server{
     public:
-       virtual void open(int port);
+       virtual void open(int port,ClientHandler c);
        virtual  bool stop();
        virtual void start(int port);
-        void threadLoop(int port);
+        void threadLoop(int port,ClientHandler c);
+
        MySerialServer();
        ~MySerialServer();
 
         void start();
     };
 
-class MyParallelServer: public server_side::Server{
 
-     };
+class MyParallelServer: public Server{
 
-
-
-    class ClientHandler{
-        void handlerClient(ofstream outputStream,ifstream inputStream );
-    };
+};
 
 
 
-
-    class Solver{
-
-        public:
-        void solve();
-
-    };
+class MyTestClientHandler: public ClientHandler{
+    public:
+    CacheManager<string,string> file_cache_manager;
+    StringRevers stringRevers;
 
 
+    void WriteAnswerToClient(int outPutStream,string question);
+    void handlerClient(int outputStream,int inputStream );
 
- 
+};
 
-
-
-
-
-
-    class MyTestClientHandler: public ClientHandler{
-        FileCacheManager file_cache_manager;
-        Solver solver(){
-
-        }
-        void handlerClient(ofstream outputStream,ifstream inputStream );
-
-    };
 
 
 

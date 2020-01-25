@@ -1,6 +1,4 @@
-//
-// Created by sahar on 21/01/2020.
-//
+
 #ifndef UNTITLED_SEARCHER_H
 #define UNTITLED_SEARCHER_H
 
@@ -10,9 +8,10 @@
 #include <iostream>
 #include <vector>
 
-#include "server_side.h"
 #include "Searchable.h"
 #include "State.h"
+#include "Solver.h"
+
 
 
 template <class T>
@@ -24,11 +23,13 @@ private:
 
 public:
     Searcher(){
-        MyPriorityQueue = new queue<State<T>*>;
+
+        MyPriorityQueue =  new std::queue<State<T>*>;
         evaluatedNodes = 0;
     }
     //the search method
-    virtual Solver search (Searchable<T> searchable);
+    virtual T search (Searchable<T> searchable);
+
     //get how many nodes were evaluated by the algorithm
      int getNumberOfNodesEvaluated();
 
