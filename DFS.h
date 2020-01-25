@@ -19,9 +19,22 @@
 using namespace std;
 
 template <class T>
-class DFS: public Searcher<T>{
+class DFSSearcher: public Searcher<T>{
+    public:
+        vector<State<T>*> search (Searchable<T> searchable)
+        {
+            vector<State<T>*> listOfStates;
+            vector<State<T>*> visited;
+        }
 
+        void searchRec(vector<StateeState<T>* state, vector<State<T>*>& visited)
+        {
+            if(find(visited.begin(), visited.end(), state) == visited.end()) // state not yet visited
+            {
+                visited.push_back(state);
 
+            }
+        }
 };
 
 #endif //UNTITLED_DFS_H

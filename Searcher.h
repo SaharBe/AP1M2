@@ -11,11 +11,12 @@
 #include "Searchable.h"
 #include "State.h"
 #include "Solver.h"
+#include "PathNode.h"
 
 
 using namespace std;
 
-template <class T>
+template <class T, class S>
 class Searcher{
 
 protected:
@@ -35,7 +36,7 @@ public:
 
     //the search method
 
-    virtual vector<State<T>*> search (Searchable<T> searchable) = 0;
+    virtual vector<PathNode<T, S>> search (Searchable<T> searchable) = 0;
 
     //get how many nodes were evaluated by the algorithm
      virtual int getNumberOfNodesEvaluated(){

@@ -8,25 +8,10 @@
 #include "Searchable.h"
 #include <string>
 
+#include "Node.h"
 using namespace std;
 
-class Node{
-    int x;
-    int y;
 
-    string get(int x,int y){
-        string x1 = to_string(x);
-        string y1 = to_string(y);
-        return '('+ x1 + ','+ y1 + ')';
-    }
-
-public:
-    Node(int x, int y){
-        this->x = x;
-        this->y = y;
-
-    }
-};
 
 
 template <class T>
@@ -35,20 +20,34 @@ private:
     int cols{0};
     int rows{0};
     int numOfCells = cols*rows;
-    Node start;
-    Node end;
+    State<T> start;
+    State<T> end;
 
 public:
-    Matrix(int cols, int rows,Node start, Node end ){
+    Matrix(int cols, int rows,State<T> start, State<T> end ){
         this->cols = cols;
         this->rows = rows;
         this->numOfCells =  cols* rows;
+
 
     }
     ~Matrix(){
         delete start;
         delete end;
     }
+    State<T> getInitialState() {
+        return start;
+    }
+    State<T> getGoalState() {
+        return end;
+    }
+    vector<vector<Node>*> getAllPossibleStates(State<Node> *state) {
+        std:: vector<State<Node>*> result;
+
+
+
+    }
+
 
 
 };
