@@ -10,6 +10,7 @@
 
 
 
+
 using namespace std;
 
 #ifndef UNTITLED_SERVER_SIDE_H
@@ -20,7 +21,8 @@ using namespace std;
 class ClientHandler{
     public:
         void handlerClient(int outputStream,int inputStream );
-    };
+
+};
 
 
 class Server {
@@ -29,9 +31,8 @@ public:
     virtual ~Server()= default;
 
     virtual void open(int port,ClientHandler c) = 0;
-    virtual bool stop() = 0;
+    virtual bool stop() =0;
 };
-
 
 
 
@@ -45,7 +46,7 @@ class MySerialServer: public Server{
        MySerialServer();
        ~MySerialServer();
 
-        void start();
+        
     };
 
 
@@ -56,6 +57,7 @@ class MyParallelServer: public Server{
 
 
 class MyTestClientHandler: public ClientHandler{
+
     public:
     CacheManager<string,string> file_cache_manager;
     StringRevers stringRevers;
@@ -65,8 +67,6 @@ class MyTestClientHandler: public ClientHandler{
     void handlerClient(int outputStream,int inputStream );
 
 };
-
-
 
 
 

@@ -1,4 +1,3 @@
-
 #include <iostream>
 #include <thread>
 #include <sys/socket.h>
@@ -19,8 +18,7 @@ void MySerialServer:: threadLoop(int streamSocket,ClientHandler c){
    c.handlerClient(streamSocket,streamSocket);
 
 
-
-    }
+}
 
 }
 
@@ -55,7 +53,7 @@ void  MySerialServer :: open(int port,ClientHandler c){
 
         if (client_socket == -1) {
             //error
-             std::cerr << "Error accepting client\n" << std::endl;
+            std::cerr << "Error accepting client\n" << std::endl;
             continue;
 
         }else {
@@ -79,10 +77,10 @@ bool MySerialServer::stop() {
     return flag;
 }
 
- MySerialServer:: MySerialServer() {
+MySerialServer:: MySerialServer() {
 
 }
- MySerialServer::~MySerialServer() {
+MySerialServer::~MySerialServer() {
 
 }
 
@@ -117,7 +115,34 @@ void MyTestClientHandler::handlerClient(int outputStream, int inputStream) {
         WriteAnswerToClient(outputStream,question);
 
     }
-  }
+}
+
+namespace boot{
+
+    class Main{
+
+        int main(int argc, char* args[]) {
+          int port = stoi(args[0]);
+
+          Server* server = new MySerialServer();
+
+
+          Solver* solver = new Solver<P,s> ();
+          ClientHandler* clientHandler = new ClientHandler(solver,
+          server(clientHandler);
+
+          server->open(port, reinterpret_cast<ClientHandler &&>(clientHandler));
+
+        //  ObjectAdapter objectAdapter;
+          CacheManager* cacheManager = new FileCacheManager;
+
+
+        }
+
+
+
+    };
+
 }
 
 
