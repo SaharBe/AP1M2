@@ -6,6 +6,8 @@
 #include <unordered_map>
 #include "CacheManager.h"
 #include "Solver.h"
+#include "ObjectAdapter.h"
+
 
 
 
@@ -34,18 +36,19 @@ public:
 
 
 
-
 class MySerialServer: public Server{
     public:
        virtual void open(int port,ClientHandler c);
        virtual  bool stop();
        virtual void start(int port);
         void threadLoop(int port,ClientHandler c);
+
        MySerialServer();
        ~MySerialServer();
 
-        void start();
+        
     };
+
 
 class MyParallelServer: public Server{
 
@@ -54,12 +57,16 @@ class MyParallelServer: public Server{
 
 
 class MyTestClientHandler: public ClientHandler{
-    FileCacheManager file_cache_manager;
-    Solver
-    void handlerClient(int client_soket, ifstream inputStream) ;
+
+    public:
+    CacheManager<string,string> file_cache_manager;
+    StringRevers stringRevers;
+
+
+    void WriteAnswerToClient(int outPutStream,string question);
+    void handlerClient(int outputStream,int inputStream );
 
 };
-
 
 
 

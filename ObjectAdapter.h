@@ -1,6 +1,4 @@
-//
-// Created by sahar on 23/01/2020.
-//
+
 
 #ifndef UNTITLED_OBJECTADAPTER_H
 #define UNTITLED_OBJECTADAPTER_H
@@ -22,10 +20,9 @@ public:
 
 class ObjectAdapter: public Solver<class Problem, class Solution>{
 public:
-    virtual Solution* solve(Problem* problem){
 
+    virtual Solution* solve(Problem* problem){}
 
-    }
 
 
 };

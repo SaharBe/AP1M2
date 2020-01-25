@@ -1,6 +1,4 @@
-//
-// Created by sahar on 21/01/2020.
-//
+
 #ifndef UNTITLED_SEARCHER_H
 #define UNTITLED_SEARCHER_H
 
@@ -9,9 +7,11 @@
 #include <queue>
 #include <iostream>
 #include <vector>
+
 #include "Searchable.h"
 #include "State.h"
 #include "Solver.h"
+
 
 using namespace std;
 
@@ -34,7 +34,9 @@ public:
     virtual ~Searcher() {}
 
     //the search method
+
     virtual vector<State<T>*> search (Searchable<T> searchable) = 0;
+
     //get how many nodes were evaluated by the algorithm
      virtual int getNumberOfNodesEvaluated(){
         return evaluatedNodes;
