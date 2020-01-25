@@ -9,6 +9,7 @@
 #include "ObjectAdapter.h"
 
 
+
 using namespace std;
 
 #ifndef UNTITLED_SERVER_SIDE_H
@@ -40,11 +41,13 @@ class MySerialServer: public Server{
        virtual  bool stop();
        virtual void start(int port);
         void threadLoop(int port,ClientHandler c);
+
        MySerialServer();
        ~MySerialServer();
 
         void start();
     };
+
 
 class MyParallelServer: public Server{
 
@@ -62,6 +65,7 @@ class MyTestClientHandler: public ClientHandler{
     void handlerClient(int outputStream,int inputStream );
 
 };
+
 
 
 

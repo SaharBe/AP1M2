@@ -11,6 +11,7 @@ using namespace std;
 #define UNTITLED__CACHEMANAGER_H_
 
 
+
 //interface for a cacheManager. it gets a problem from a clientHandler and returns solution if its in cache
 template <class Problem,class Solution>
 class CacheManager {
@@ -19,6 +20,7 @@ class CacheManager {
     Solution returnSolution(Problem problem); //return a solution to client handler
     void SaveSolution(class problem,class solution) {
     }
+
 
   };
 
@@ -55,6 +57,7 @@ class CacheManager {
         }
     }
 }
+
 
 
 

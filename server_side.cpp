@@ -7,6 +7,7 @@
 #include <pthread.h>
 #include <time.h>
 #include "server_side.h"
+
 #include "Solver.h"
 
 using namespace std;
@@ -18,11 +19,13 @@ void MySerialServer:: threadLoop(int streamSocket,ClientHandler c){
    c.handlerClient(streamSocket,streamSocket);
 
 
+
     }
 
 }
 
 void  MySerialServer :: open(int port,ClientHandler c){
+
     int socketfd = socket(AF_INET,SOCK_STREAM,0);
     if(socketfd == -1){
         //error
@@ -56,7 +59,9 @@ void  MySerialServer :: open(int port,ClientHandler c){
             continue;
 
         }else {
+
             std::thread t(&MySerialServer::threadLoop, this, client_socket,c);
+
             t.join();
         }
 
@@ -88,6 +93,7 @@ void MySerialServer::start(int port) {
 
 
 
+
 void MyTestClientHandler::handlerClient(int outputStream, int inputStream) {
   while(true){
     char question[1024];
@@ -96,6 +102,7 @@ void MyTestClientHandler::handlerClient(int outputStream, int inputStream) {
         cout << "error in reading" << endl;
         return;
     }
+
     //if question in empty,the client didnt sent a question yet,keep waiting for it
     if(strlen(question) == 0){
       continue;
@@ -106,10 +113,13 @@ void MyTestClientHandler::handlerClient(int outputStream, int inputStream) {
     }
     //else,there is a question and write the answer to the output stream
     else{
+
         WriteAnswerToClient(outputStream,question);
+
     }
   }
 }
+
 
 void MyTestClientHandler::WriteAnswerToClient(int outPutStream,string question) {
     string answer;
@@ -121,3 +131,4 @@ void MyTestClientHandler::WriteAnswerToClient(int outPutStream,string question) 
     }
     int valWrite = write(outPutStream,answer.c_str(), answer.length());
 }
+
