@@ -13,29 +13,50 @@
 #include "State.h"
 #include "Solver.h"
 
+using namespace std;
 
 template <class T>
 class Searcher{
 
-private:
-    std:: deque<State<T>*> MyPriorityQueue ;
+protected:
+
+    virtual vector<State<T>*> MyPriorityQueue(State<T> *node) ;
+    virtual vector<State<T>*> backTrace(State<T> *node);
     int evaluatedNodes;
 
+
 public:
+    //ctor
     Searcher(){
-        MyPriorityQueue =  new std::queue<State<T>*>;
         evaluatedNodes = 0;
     }
+    //
+    virtual ~Searcher() {}
+
     //the search method
-    virtual T search (Searchable<T> searchable);
+    virtual vector<State<T>*> search (Searchable<T> searchable) = 0;
     //get how many nodes were evaluated by the algorithm
-     int getNumberOfNodesEvaluated();
+     virtual int getNumberOfNodesEvaluated(){
+        return evaluatedNodes;
+     }
 
-protected:
-    State<T> popOpenList(){
-        evaluatedNodes++;
-        return MyPriorityQueue.pop_back();
 
+    template<T>
+    vector<State<T>*> backTrace(State<T> *s) {
+        vector<State<T> *> backTracevector;
+        State<T>* state = s;
+        ///enter all the back Trace to the vector
+        while (state->getCameFrom() != nullptr) {
+            backTracevector.insert(backTracevector.begin(), s);
+            state = state->getCameFrom();
+        }
+        ///
+        if (backTracevector.empty()) {
+            return backTracevector;
+        }
+        //return all back trace
+        backTracevector.insert(backTracevector.begin(), s);
+        return backTracevector;
     }
 
 

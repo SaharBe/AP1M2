@@ -15,9 +15,9 @@
 template <class T>
 class Searchable {
 public:
- virtual State<T> getInitialState();
- virtual State<T> getGoalState();
- virtual  std::vector<State<T>*> getAllPossibleStates(State<T> state);
+ virtual State<T> getInitialState() = 0;
+ virtual State<T> getGoalState() = 0;
+ virtual std::vector<State<T>*> getAllPossibleStates(State<T> state) = 0;
 
 };
 

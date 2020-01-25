@@ -1,4 +1,3 @@
-
 #include <iostream>
 #include <thread>
 #include <sys/socket.h>
@@ -6,24 +5,28 @@
 #include <unistd.h>
 #include <pthread.h>
 #include <time.h>
-#include "Solver.h"
 #include "server_side.h"
+
+
+
 
 
 using namespace std;
 
-//using namespace server_side;
-
-void MySerialServer:: threadLoop(int streamSocket,ClientHandler c){
-
-   c.handlerClient(streamSocket,streamSocket);
 
 
-    }
+
+
+void MySerialServer:: threadLoop(int streamSocket){
+
+    clientHandler.handleClient(streamSocket,streamSocket);
+
 
 }
 
-void  MySerialServer :: open(int port,ClientHandler c){
+}
+
+void  MySerialServer :: open(int port){
     int socketfd = socket(AF_INET,SOCK_STREAM,0);
     if(socketfd == -1){
         //error
@@ -53,11 +56,11 @@ void  MySerialServer :: open(int port,ClientHandler c){
 
         if (client_socket == -1) {
             //error
-             std::cerr << "Error accepting client\n" << std::endl;
+            std::cerr << "Error accepting client\n" << std::endl;
             continue;
 
         }else {
-            std::thread t(&MySerialServer::threadLoop, this, client_socket,c);
+            std::thread t(&MySerialServer::threadLoop, this, client_socket);
             t.join();
         }
 
@@ -75,10 +78,10 @@ bool MySerialServer::stop() {
     return flag;
 }
 
- MySerialServer:: MySerialServer() {
+MySerialServer:: MySerialServer() {
 
 }
- MySerialServer::~MySerialServer() {
+MySerialServer::~MySerialServer() {
 
 }
 
@@ -89,27 +92,51 @@ void MySerialServer::start(int port) {
 
 
 
-void MyTestClientHandler::handlerClient(int outputStream, int inputStream) {
-  while(true){
-    char question[1024];
-    int valRead = read(inputStream, question, 1024);
-    if(valRead ==-1){
-        cout << "error in reading" << endl;
-        return;
+void MyTestClientHandler::handlerClient(ofstream outputStream, ifstream inputStream) {
+    while(true){
+        char question[1024];
+        inputStream.getline(question,1024);
+        //if question in empty,the client didnt sent a question yet,keep waiting for it
+        if(strlen(question) == 0){
+            continue;
+        }
+        //if client sent in the stream "end",go back to server which waiting for other client
+        if(question == "end"){
+            break;
+        }
+            //else,there is a question and write the answer to the output stream
+        else{
+            char answer[] = file_cache_manager.returnSolution(question);
+            outputStream.write(answer,answer.length());
+        }
     }
-    //if question in empty,the client didnt sent a question yet,keep waiting for it
-    if(strlen(question) == 0){
-      continue;
-    }
-    //if client sent in the stream "end",go back to server which waiting for other client
-    if(question == "end"){
-      break;
-    }
-    //else,there is a question and write the answer to the output stream
-    else{
-      string answer = file_cache_manager.returnSolution(question);
-      int valWrite = write(outputStream,answer.c_str(), answer.length());
-    }
-  }
+}
+
+namespace boot{
+
+    class Main{
+
+        int main(int argc, char* args[]) {
+          int port = stoi(args[0]);
+
+          Server* server = new MySerialServer();
+
+
+          Solver* solver = new Solver<P,s> ();
+          ClientHandler* clientHandler = new ClientHandler(solver,
+          server(clientHandler);
+
+          server->open(port, reinterpret_cast<ClientHandler &&>(clientHandler));
+
+        //  ObjectAdapter objectAdapter;
+          CacheManager* cacheManager = new FileCacheManager;
+
+
+        }
+
+
+
+    };
+
 }
 

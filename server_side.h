@@ -19,7 +19,8 @@ using namespace std;
 class ClientHandler{
     public:
         void handlerClient(int outputStream,int inputStream );
-    };
+
+};
 
 
 class Server {
@@ -28,7 +29,7 @@ public:
     virtual ~Server()= default;
 
     virtual void open(int port,ClientHandler c) = 0;
-    virtual bool stop() = 0;
+    virtual bool stop() =0;
 };
 
 
@@ -54,10 +55,8 @@ class MyParallelServer: public Server{
 
 class MyTestClientHandler: public ClientHandler{
     FileCacheManager file_cache_manager;
-    Solver* solver(){
-
-    }
-    void handlerClient(int outputStream,int inputStream );
+    Solver
+    void handlerClient(int client_soket, ifstream inputStream) ;
 
 };
 
