@@ -6,6 +6,6 @@ set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_FLAGS -pthread)
 
 
-add_executable(untitled main.cpp server_side.cpp server_side.h Searchable.h Searcher.h State.cpp State.h BFS.h DFS.h BreadthFirstSearch.h AStar.h CacheManager.h Solver.h ObjectAdapter.cpp ObjectAdapter.h)
+add_executable(untitled server_side.cpp server_side.h Searchable.h Searcher.h State.h BFS.h DFS.h BreadthFirstSearch.h AStar.h CacheManager.h Solver.h ObjectAdapter.cpp ObjectAdapter.h Matrix.h MyParallelServer.cpp MyParallelServer.h Node.cpp Node.h PathNode.cpp PathNode.h)
 
 

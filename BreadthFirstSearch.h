@@ -15,6 +15,7 @@
 #include "Searcher.h"
 #include "State.h"
 
+
 using namespace std;
 
 template <class T>
@@ -26,7 +27,7 @@ class BreadthFirstSearch: public Searcher<T> {
     visited[i] = false;
 
     // Create a queue for BFS
-    list<int> queue;
+    queue<int> queue;
 
     // Mark the current node as visited and enqueue it
     visited[s] = true;

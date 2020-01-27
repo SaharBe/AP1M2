@@ -8,23 +8,21 @@
 template <typename T>
 class State{
 private:
-    T state;
+    T id;
     double cost;
-    State<T> cameFrom;
+    State<T>* cameFrom;
 
 public:
 
-    template <T>
     State(T state){
         this->state = state;
         this->cost = cost;
     }
-    template <T>
-    bool Equals(State<T> s){
-        return State(state).Equals(s.state);
+
+    bool operator==(const State<T>& other)
+    {
+        return id == other.id;
     }
-
-
 };
 
 

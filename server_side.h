@@ -10,6 +10,7 @@
 
 
 
+
 using namespace std;
 
 #ifndef UNTITLED_SERVER_SIDE_H
@@ -19,33 +20,31 @@ using namespace std;
 
 class ClientHandler{
     public:
-        void handlerClient(int outputStream,int inputStream );
-    };
+        virtual void handlerClient(int outputStream,int inputStream ) = 0;
+
+
+};
 
 
 class Server {
 public:
-    Server() = default;
-    virtual ~Server()= default;
-
-    virtual void open(int port,ClientHandler c) = 0;
-    virtual bool stop() = 0;
+    virtual void open(int port,ClientHandler& c) = 0;
+    virtual bool stop() =0;
 };
-
 
 
 
 class MySerialServer: public Server{
     public:
-       virtual void open(int port,ClientHandler c);
+       virtual void open(int port,ClientHandler& c);
        virtual  bool stop();
        virtual void start(int port);
-        void threadLoop(int port,ClientHandler c);
+        void threadLoop(int port,ClientHandler& c);
 
        MySerialServer();
        ~MySerialServer();
 
-        void start();
+        
     };
 
 
@@ -56,17 +55,21 @@ class MyParallelServer: public Server{
 
 
 class MyTestClientHandler: public ClientHandler{
+
     public:
-    CacheManager<string,string> file_cache_manager;
+    FileCacheManager& file_cache_manager ;
     StringRevers stringRevers;
 
 
-    void WriteAnswerToClient(int outPutStream,string question);
-    void handlerClient(int outputStream,int inputStream );
+    virtual void WriteAnswerToClient(int outPutStream,Problem question);
+    virtual void handlerClient(int outputStream,int inputStream );
 
 };
-
-
+namespace boot {
+    class Main {
+        int main(int argc, char *args[]);
+    };
+}
 
 
 

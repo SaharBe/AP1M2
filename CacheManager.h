@@ -21,6 +21,7 @@ template <class Problem,class Solution>
 class CacheManager {
  public:
     virtual bool DoesSolutionExist(Problem problem) = 0;
+
     virtual Solution returnSolution(Problem problem) = 0;
     virtual void SaveSolution(Problem problem, Solution solution) = 0;
   };
@@ -32,7 +33,9 @@ class CacheManager {
       vector<string> hashMapVector;
       int hashMapMaxSize = 10;
 
+
       virtual bool DoesSolutionExist(string problem);
+
 
       virtual void SaveSolution(string problem,string solution);
 
@@ -49,6 +52,7 @@ class CacheManager {
 
       string ReturnSolutionFromFiles(string problem);
 
+
       bool DoesSolutionExistsInFiles(string problem);
 
       void SaveSolutionInFiles(string problem, string solution);
@@ -57,6 +61,7 @@ class CacheManager {
 
 
   };
+
 
 
 
