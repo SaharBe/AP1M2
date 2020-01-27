@@ -9,5 +9,20 @@ Node Node::upNode() {
 }
 
 Node Node::downNode() {
-    return
+
+    return Node(this->x, this->y -1);
+}
+
+Node Node::rightNode() {
+    return Node(this->x+1, this->y);
+}
+Node Node::leftNode() {
+    return Node(this->x -1, this->y );
+}
+
+int Node ::getRow(){
+    return this->y;
+}
+int Node:: getCol(){
+    return this->x;
 }

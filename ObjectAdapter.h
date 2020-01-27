@@ -5,6 +5,7 @@
 
 
 #include "Solver.h"
+#include "Searcher.h"
 #include <iostream>
 #include <string.h>
 
@@ -29,15 +30,22 @@ public:
 };
 
 
-
+/*
 class ObjectAdapter: public Solver<class Problem, class Solution>{
+    Searcher<Problem>* searcher;
+
+    Searchable<Problem>* searchable;
+
 public:
 
-    virtual Solution* solve(Problem* problem){}
+    virtual Solution* solve(Problem* problem){
+        searcher->search();
+
+    }
 
 
 
-};
+};*/
 
 
 

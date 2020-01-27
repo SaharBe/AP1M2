@@ -36,7 +36,8 @@ public:
 
     //the search method
 
-    virtual vector<PathNode<T, S>> search (Searchable<T> searchable) = 0;
+    virtual vector<State<T>> search (const Searchable<T>& searchable) = 0;
+
 
     //get how many nodes were evaluated by the algorithm
      virtual int getNumberOfNodesEvaluated(){
@@ -44,8 +45,8 @@ public:
      }
 
 
-    template<T>
-    vector<State<T>*> backTrace(State<T> *s) {
+  //  template<T>
+  /*  vector<State<T>*> backTrace(State<T> *s) {
         vector<State<T> *> backTracevector;
         State<T>* state = s;
         ///enter all the back Trace to the vector
@@ -60,8 +61,7 @@ public:
         //return all back trace
         backTracevector.insert(backTracevector.begin(), s);
         return backTracevector;
-    }
-
+    }*/
 
 
 
