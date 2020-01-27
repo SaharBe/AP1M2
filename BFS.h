@@ -7,7 +7,6 @@
 
 #include <iostream>
 #include <unordered_map>
-#include <hash_map>
 #include <vector>
 #include <queue>
 
@@ -18,8 +17,8 @@
 
 using namespace std;
 
-template <class T>
-class BFS: public Searcher<T> {
+template <class T, class S>
+class BFS: public Searcher<T, S> {
     vector<State<T>> search (const Searchable<T>& searchable){
         map<State<T>*, bool> visited;
         map<State<T>*, State<T>*> parents;
@@ -94,7 +93,7 @@ class BFS: public Searcher<T> {
     } */
 
 
-}
+};
 
 
 #endif //UNTITLED_BFS_H

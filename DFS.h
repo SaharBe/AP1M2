@@ -7,7 +7,6 @@
 
 #include <iostream>
 #include <unordered_map>
-#include <hash_map>
 #include <vector>
 #include <list>
 
@@ -20,7 +19,7 @@ using namespace std;
 
 
 template <class T, class S>
-class DFSSearcher: public Searcher<T>{
+class DFSSearcher: public Searcher<T, S>{
     public:
         vector<State<T>> search (const Searchable<T>& searchable)
         {

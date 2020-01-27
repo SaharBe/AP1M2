@@ -15,6 +15,10 @@
 #include "Solver.h"
 #include "Searcher.h"
 #include "vector"
+#include "DFS.h"
+#include "BFS.h"
+#include "BestFS.h"
+#include "AStar.h"
 
 
 template <class T>
@@ -24,7 +28,9 @@ class MatrixSolver: public Solver< string, string>{
 
   //  make the matrix from the string
     ///
-    Searcher<Matrix<T>>* searcher;
+  // Searcher<Matrix<Node>>* searcher = new BestFS ;
+
+  Searcher<Matrix<Node>,  vector<State<T>>> searcher ;
 
 public:
 

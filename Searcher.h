@@ -45,8 +45,8 @@ public:
      }
 
 
-  //  template<T>
-  /*  vector<State<T>*> backTrace(State<T> *s) {
+   template<T>
+   vector<State<T>*> backTrace(State<T> *s) {
         vector<State<T> *> backTracevector;
         State<T>* state = s;
         ///enter all the back Trace to the vector
@@ -61,8 +61,7 @@ public:
         //return all back trace
         backTracevector.insert(backTracevector.begin(), s);
         return backTracevector;
-    }*/
-
+    }
 
 
 };

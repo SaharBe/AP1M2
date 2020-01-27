@@ -7,7 +7,6 @@
 
 #include <iostream>
 #include <unordered_map>
-#include <hash_map>
 #include <vector>
 #include <queue>
 #include <set>
@@ -18,8 +17,11 @@
 
 using namespace std;
 
-template <class T>
-class BestFS: public Searcher<T>{
+template <class T, class S>
+class BestFS: public Searcher<T, S>{
+private:
+    priority_queue<State<T>> open;
+
 public:
 
     vector<State<T>*> openList;
@@ -27,34 +29,69 @@ public:
     set<State<T>*> closed ;
 
 
-    virtual vector<State<T>> search (const Searchable<T>& searchable)
-    {
-        priority_queue<State<T>> open;
+    virtual vector<State<T>> search (const Searchable<T>& searchable) {
+        this->evaluatedNodes = 0;
+
+
+        State<T> *goal = searchable->getGoalState();
+
         open.push(searchable.getInitialState());
         set<State<T>*> closed;
 
         while(!open.empty())
         {
-            State<T> best = open.top();
-            closed.insert(&best);
+            this->getNumberOfNodesEvaluated()++;
+
+            State<T> best = open.pop();
+        //*    closed.insert(&best);
 
             if(best == searchable.getGoalState())
             {
-                //
+                vector<State<T> *> output = this->backTrace(searchable->getInitialState(), best);
+                this->clearAll(output,&open);
+                return output;
             }
             else{
                 vector<State<T>> successorts = searchable.getAllPossibleStates(best);
 
                 for(int i = 0; i < successorts.size(); i++)
                 {
-                    if(closed.count(&successorts[i]) == 0 && open.){
+//                    if(closed.count(&successorts[i]) == 0 && open.){
 
                     }
                 }
             }
         }
-    }
 
-};
+
+    /*virtual void clearAll(vector<State<T> *> output, ) {
+        State<T> *temp;
+        while (!DB->emptyOpen()) {
+            State<T> * temp =DB->popFromOpen();
+            if(!DB->isExistVector(temp)){
+                delete (temp);
+            }
+        }
+        while (!DB->emptyClosed()) {
+
+            temp = DB->popFromClosed();
+
+            for (int i = 0; i < output.size(); i++) {
+                if (output[i] == temp) {
+                    break;
+                }
+                if (i == output.size() - 1) {
+                    delete (temp);
+                }
+            }
+
+        }*/
+
+
+
+
+    };
+
+
 
 #endif //UNTITLED_BESTFS_H

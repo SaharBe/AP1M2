@@ -4,9 +4,10 @@
 #include <iostream>
 #include <fstream>
 #include <unordered_map>
-#include "CacheManager.h"
 #include "Solver.h"
+#include "CacheManager.h"
 #include "ObjectAdapter.h"
+#include "MatrixSolver.h"
 
 
 
@@ -27,9 +28,13 @@ class ClientHandler{
 
 
 class Server {
+
+
 public:
     virtual void open(int port,ClientHandler& c) = 0;
-    virtual bool stop() =0;
+    virtual bool stop(int socet) =0;
+
+
 };
 
 
@@ -37,11 +42,13 @@ public:
 class MySerialServer: public Server{
     public:
        virtual void open(int port,ClientHandler& c);
-       virtual  bool stop();
-       virtual void start(int port);
-        void threadLoop(int port,ClientHandler& c);
+       virtual  bool stop(int socet);
 
-       MySerialServer();
+
+       virtual void start(int port);
+
+
+       MySerialServer() ;
        ~MySerialServer();
 
         
@@ -53,7 +60,6 @@ class MyParallelServer: public Server{
 };
 
 
-
 class MyTestClientHandler: public ClientHandler{
 
     public:
@@ -61,12 +67,30 @@ class MyTestClientHandler: public ClientHandler{
     StringRevers stringRevers;
 
 
-    virtual void WriteAnswerToClient(int outPutStream,Problem question);
+    virtual void WriteAnswerToClient(int outPutStream,string question);
     virtual void handlerClient(int outputStream,int inputStream );
+
+};
+
+class  MyClientHandler : public ClientHandler{
+
+public:
+    Solver<string,string> *solver;
+    CacheManager<string,string> *cacheManager;
+
+    virtual void WriteAnswerToClient(int outPutStream,string question);
+    virtual void handlerClient(int outputStream,int inputStream );
+
+
+
+
+
+
 
 };
 namespace boot {
     class Main {
+    public:
         int main(int argc, char *args[]);
     };
 }

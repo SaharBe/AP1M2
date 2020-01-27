@@ -13,12 +13,7 @@ using namespace std;
 
 //using namespace server_side;
 
-void MySerialServer:: threadLoop(int streamSocket,ClientHandler& c){
 
-   c.handlerClient(streamSocket,streamSocket);
-
-
-}
 
 
 void  MySerialServer :: open(int port,ClientHandler& c){
@@ -57,7 +52,7 @@ void  MySerialServer :: open(int port,ClientHandler& c){
 
         }else {
 
-            std::thread t(&MySerialServer::threadLoop, this, client_socket,c);
+            std::thread t(&ClientHandler::handlerClient, &c, client_socket, client_socket);
 
             t.join();
         }
@@ -71,7 +66,7 @@ void  MySerialServer :: open(int port,ClientHandler& c){
 
 
 
-bool MySerialServer::stop() {
+bool MySerialServer::stop(int socket) {
     bool flag = false;
     return flag;
 }
@@ -119,28 +114,11 @@ void MyTestClientHandler::handlerClient(int outputStream, int inputStream) {
 }
 
 
-int boot::Main::main(int argc, char *args[]) {
-    int port = stoi(args[0]);
-
-    Server* server = new MySerialServer();
-
-    string sahar = "sahar";
-
-
-   // Solver<string,string> solver = new StringRevers ();
-  //  ClientHandler< testClientHandler = new MyTestClientHandler();
 
 
 
-    //  ObjectAdapter objectAdapter;
 
-
-
-}
-
-
-
-void MyTestClientHandler::WriteAnswerToClient(int outPutStream,Problem question) {
+void MyTestClientHandler::WriteAnswerToClient(int outPutStream,string question) {
 
     if(file_cache_manager.DoesSolutionExist(question)) {
 
@@ -153,3 +131,69 @@ void MyTestClientHandler::WriteAnswerToClient(int outPutStream,Problem question)
     }
     //int valWrite = write(outPutStream,answer.c_str(), answer.length());
 }
+
+void MyClientHandler::handlerClient(int outputStream, int inputStream) {
+    string line = "";
+    string problem;
+    char buffer[1024];
+    char c;
+    int i;
+    bool end = false;
+
+    while (!end) {
+
+        int valRead = recv(inputStream, buffer, 1024, 0);
+        if (valRead == -1) {
+            cout << "error in reading" << endl;
+            return;
+        }
+        for (i = 0; i < valRead; i++) {
+            c = problem[i];
+            if (c == '\n') {
+                problem += line + "\n";
+                line="";
+                continue;
+            }
+
+            if (!line.compare("end")) {
+                end = true;
+                break;
+            }
+            line += c;
+            continue;
+        }
+    }
+    string solution;
+    if (cacheManager->DoesSolutionExist(problem)){
+        solution =cacheManager->returnSolution(problem);
+    }
+    else {
+        solution = solver->solve(problem);
+    }
+    solution+="\n";
+   if(!write(outputStream,solution.c_str(),solution.length()));{
+       throw "error in writing to client";
+   }
+}
+
+int boot::Main::main(int argc, char *args[]) {
+    int port = stoi(args[0]);
+
+    Server* server = new MySerialServer();
+
+    string sahar = "sahar";
+
+
+    // Solver<string,string> solver = new StringRevers ();
+    //  ClientHandler< testClientHandler = new MyTestClientHandler();
+
+
+
+    //  ObjectAdapter objectAdapter;
+
+
+
+}
+
+
+
