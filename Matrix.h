@@ -8,51 +8,77 @@
 #include "Searchable.h"
 #include <string>
 
+#include "Node.h"
 using namespace std;
 
-class Node{
-    int x;
-    int y;
 
-    string get(int x,int y){
-        string x1 = to_string(x);
-        string y1 = to_string(y);
-        return '('+ x1 + ','+ y1 + ')';
-    }
-
-public:
-    Node(int x, int y){
-        this->x = x;
-        this->y = y;
-
-    }
-};
 
 
 template <class T>
 class Matrix: public Searchable<T> {
 private:
-    int cols{0};
-    int rows{0};
-    int numOfCells = cols*rows;
-    Node start;
-    Node end;
+    int cols;
+    int rows;
+
+    State<T> start;
+    State<T> end;
 
 public:
-    Matrix(int cols, int rows,Node start, Node end ){
+    Matrix(int cols, int rows,State<T> start, State<T> end ){
         this->cols = cols;
         this->rows = rows;
         this->numOfCells =  cols* rows;
+
 
     }
     ~Matrix(){
         delete start;
         delete end;
     }
+    State<T> getInitialState() {
+        return start;
+    }
+    State<T> getGoalState() {
+        return end;
+    }
+    vector<State<T>> getAllPossibleStates(State<Node> *state) {
+        std:: vector<State<Node>*> result;
+
+        Node curr = state->getState();
+        std::vector<Node> steps = {curr.downNode(), curr.upNode(), curr.rightNode(), curr.leftNode()};
+        for (Node step : steps) {
+            if (validStep(step)) {
+                result.push_back(new State<Node>((*this)[step] + state->getCost()));
+            }
+        }
+        return result;
+
+    }
+
+    bool validStep(Node node) {
+        if ((node.getRow() >= this->rows) ||
+        (node.getRow() < 0) || (node.getCol() >= this->cols) || (node.getCol() < 0))
+        {
+            return false;
+        }
+        return ((*this)[node] != -1);
+    }
+
+    void initialize(const vector<string>& info){
+        // Creating one big continuous block of memory
+        State<Node>** matrix = new State<Node> *[this->rows * this->rows];
+
+        // Each cell in the matrix is a pointer to a State object
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                matrix[i * cols + j] = new State<Node*>(new Node(i, j));
+            }
+        }
+
+    }
 
 
 };
-
 
 
 
