@@ -17,8 +17,10 @@ using namespace std;
 template <class T>
 class Matrix: public Searchable<T> {
 private:
+
     int cols;
     int rows;
+
 
     State<T> start;
     State<T> end;
@@ -41,6 +43,7 @@ public:
     State<T> getGoalState() {
         return end;
     }
+
     vector<State<T>> getAllPossibleStates(State<Node> *state) {
         std:: vector<State<Node>*> result;
 
@@ -52,6 +55,7 @@ public:
             }
         }
         return result;
+
 
     }
 

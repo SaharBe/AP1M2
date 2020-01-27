@@ -16,21 +16,18 @@ using namespace std;
 template <class Problem,class Solution>
 class CacheManager {
  public:
-    bool DoesSolutionExist(Problem problem);
-    Solution returnSolution(Problem problem); //return a solution to client handler
-    void SaveSolution(class problem,class solution) {
-    }
-
-
+    virtual bool DoesSolutionExist(Problem problem) = 0;
+    virtual Solution returnSolution(Problem problem) = 0; //return a solution to client handler
+    virtual void SaveSolution(Problem problem, Solution solution) = 0;
   };
 
 
   class FileCacheManager: public CacheManager<class Problem,class Solution>{
    public:
-    unordered_map<Problem,Problem> solutionMap;
+    std:: unordered_map<Problem*,Solution*> solutionMap;
 
     //returns T/F based on if the solution exists in the map
-    template <class Problem> bool DoesSolutionExist(Problem problem) {
+    template <class Problem>  bool DoesSolutionExist(Problem& problem) {
         if(solutionMap.find(problem) == solutionMap.end()) {
             return false;
          }
@@ -38,9 +35,9 @@ class CacheManager {
     }
 
     //return the solution from the cache
-    template <class Solution,class Problem> Solution returnSolution(Problem problem) {
+    template <class Solution,class Problem> Solution returnSolution(Problem& problem) {
         {
-            string solution;
+            Solution solution;
             //if a solution is already in the cache it returns it
             solution = solutionMap.find(problem)->second;
             return solution;
@@ -51,12 +48,12 @@ class CacheManager {
     }
 
     //saves the problem and solution in the cache
-    template <class Solution,class Problem> void SaveSolution(Problem problem,Solution solution){
-        {
+    template <class Solution,class Problem> void SaveSolution(Problem& problem,Solution& solution){
+
             solutionMap.insert(problem,solution);
-        }
+
     }
-}
+};
 
 
 

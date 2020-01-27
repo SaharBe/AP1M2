@@ -18,6 +18,7 @@
 
 using namespace std;
 
+
 template <class T, class S>
 class DFSSearcher: public Searcher<T>{
     public:
@@ -61,7 +62,6 @@ class DFSSearcher: public Searcher<T>{
                 return false;
             }
         }
-
 
 };
 

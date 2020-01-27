@@ -16,7 +16,7 @@
 
 using namespace std;
 
-template <class T>
+template <class T, class S>
 class Searcher{
 
 protected:
@@ -37,6 +37,7 @@ public:
     //the search method
 
     virtual vector<State<T>> search (const Searchable<T>& searchable) = 0;
+
 
     //get how many nodes were evaluated by the algorithm
      virtual int getNumberOfNodesEvaluated(){

@@ -9,6 +9,7 @@ Node Node::upNode() {
 }
 
 Node Node::downNode() {
+
     return Node(this->x, this->y -1);
 }
 

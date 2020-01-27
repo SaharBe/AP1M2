@@ -113,6 +113,7 @@ void MyTestClientHandler::handlerClient(int outputStream, int inputStream) {
 
          //   WriteAnswerToClient(outputStream, *question);
 
+
         }
     }
 }
@@ -142,10 +143,13 @@ int boot::Main::main(int argc, char *args[]) {
 void MyTestClientHandler::WriteAnswerToClient(int outPutStream,Problem question) {
 
     if(file_cache_manager.DoesSolutionExist(question)) {
+
      //   Solution answer = file_cache_manager.returnSolution(question);
     }
     else{
       //   answer = stringRevers.solve(question);
+
+
     }
     //int valWrite = write(outPutStream,answer.c_str(), answer.length());
 }

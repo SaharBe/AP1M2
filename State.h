@@ -19,6 +19,7 @@ public:
         this->cost = cost;
     }
 
+
     bool operator==(const State<T>& other)
     {
         return id == other.id;
