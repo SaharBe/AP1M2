@@ -4,7 +4,7 @@
 #include <netinet/in.h>
 #include <unistd.h>
 #include <pthread.h>
-#include <time.h>
+#include <sys/time.h>
 #include "server_side.h"
 
 #include "Solver.h"
@@ -37,18 +37,30 @@ void  MySerialServer :: open(int port,ClientHandler& c){
     if(listen(socketfd, 1) == -1){
         cerr << "Error during listening command\n" << std:: endl;
     }
-    struct timeval tv;
-    tv.tv_sec = 120;
-    setsockopt(socketfd, SOL_SOCKET, SO_RCVTIMEO, (const char*)&tv, sizeof tv);
 
 
-    while(&setsockopt) {
+
+
+    while(continueFlag) {
+        timeval tv;
+        tv.tv_sec = 10;
+        tv.tv_usec = 0;
+        setsockopt(socketfd, SOL_SOCKET, SO_RCVTIMEO, (const char*)&tv, sizeof tv);
         int client_socket = accept(socketfd, (struct sockaddr *) &address, (socklen_t *) &address);
 
-        if (client_socket == -1) {
-            //error
-            std::cerr << "Error accepting client\n" << std::endl;
-            continue;
+        if (client_socket == -1){
+
+            if(!continueFlag){
+                break;
+            }
+            if(errno == EWOULDBLOCK){
+                continue;
+            }
+
+            else{
+                throw invalid_argument("error connecting to client.EWOULDBLOCK should have been set to true");
+            }
+
 
         }else {
 
@@ -67,8 +79,8 @@ void  MySerialServer :: open(int port,ClientHandler& c){
 
 
 bool MySerialServer::stop(int socket) {
-    bool flag = false;
-    return flag;
+    continueFlag = false;
+    return continueFlag;
 }
 
 MySerialServer:: MySerialServer() {
@@ -78,10 +90,6 @@ MySerialServer::~MySerialServer() {
 
 }
 
-
-void MySerialServer::start(int port) {
-
-}
 
 
 

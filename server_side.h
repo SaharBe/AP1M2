@@ -8,6 +8,7 @@
 #include "CacheManager.h"
 #include "ObjectAdapter.h"
 #include "MatrixSolver.h"
+#include <vector>
 
 
 
@@ -41,6 +42,7 @@ public:
 
 class MySerialServer: public Server{
     public:
+        bool continueFlag = false;
        virtual void open(int port,ClientHandler& c);
        virtual  bool stop(int socet);
 
@@ -55,9 +57,7 @@ class MySerialServer: public Server{
     };
 
 
-class MyParallelServer: public Server{
 
-};
 
 
 class MyTestClientHandler: public ClientHandler{
