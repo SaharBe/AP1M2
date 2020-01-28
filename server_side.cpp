@@ -16,7 +16,7 @@ using namespace std;
 
 
 
-void  MySerialServer :: open(int port,ClientHandler& c){
+void  MySerialServer :: open(int port,ClientHandler* c){
 
     int socketfd = socket(AF_INET,SOCK_STREAM,0);
     if(socketfd == -1){
@@ -114,7 +114,8 @@ void MyTestClientHandler::handlerClient(int outputStream, int inputStream) {
             //else,there is a question and write the answer to the output stream
         else {
 
-         //   WriteAnswerToClient(outputStream, *question);
+
+               WriteAnswerToClient(outputStream, question);
 
 
         }
@@ -127,17 +128,17 @@ void MyTestClientHandler::handlerClient(int outputStream, int inputStream) {
 
 
 void MyTestClientHandler::WriteAnswerToClient(int outPutStream,string question) {
-
-    if(file_cache_manager.DoesSolutionExist(question)) {
-
-     //   Solution answer = file_cache_manager.returnSolution(question);
+    string answer;
+    if(cacheManager->DoesSolutionExist(question)) {
+          answer = cacheManager->returnSolution(question);
     }
     else{
-      //   answer = stringRevers.solve(question);
 
+        answer = solver->solve(question);
+        cacheManager->SaveSolution(question,answer);
 
     }
-    //int valWrite = write(outPutStream,answer.c_str(), answer.length());
+
 }
 
 void MyClientHandler::handlerClient(int outputStream, int inputStream) {
@@ -177,31 +178,31 @@ void MyClientHandler::handlerClient(int outputStream, int inputStream) {
     }
     else {
         solution = solver->solve(problem);
+        cacheManager->SaveSolution(problem,solution);
     }
     solution+="\n";
-   if(!write(outputStream,solution.c_str(),solution.length()));{
-       throw "error in writing to client";
-   }
+    if(!write(outputStream,solution.c_str(),solution.length()));{
+        throw "error in writing to client";
+    }
 }
 
-int boot::Main::main(int argc, char *args[]) {
-    int port = stoi(args[0]);
+//int boot::Main::
+int main(int argc, char *args[]) {
+    int port = stoi(args[1]);
 
     Server* server = new MySerialServer();
-
-    string sahar = "sahar";
-
-
-    // Solver<string,string> solver = new StringRevers ();
-    //  ClientHandler< testClientHandler = new MyTestClientHandler();
+  //  StringRevers stringRevers;
+    //FileCacheManager fc;
 
 
+    server->open(port, new MyTestClientHandler(new StringRevers,new FileCacheManager));
 
-    //  ObjectAdapter objectAdapter;
+;
+    this_thread::sleep_for(chrono::milliseconds(100000));
 
+    server->stop(port);
+    delete (server);
 
 
 }
-
-
 

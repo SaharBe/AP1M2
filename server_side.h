@@ -6,7 +6,7 @@
 #include <unordered_map>
 #include "Solver.h"
 #include "CacheManager.h"
-#include "ObjectAdapter.h"
+#include "StringRevers.h"
 #include "MatrixSolver.h"
 #include <vector>
 
@@ -21,8 +21,8 @@ using namespace std;
 
 
 class ClientHandler{
-    public:
-        virtual void handlerClient(int outputStream,int inputStream ) = 0;
+public:
+    virtual void handlerClient(int outputStream,int inputStream ) = 0;
 
 
 };
@@ -32,7 +32,7 @@ class Server {
 
 
 public:
-    virtual void open(int port,ClientHandler& c) = 0;
+    virtual void open(int port,ClientHandler* c) = 0;
     virtual bool stop(int socet) =0;
 
 
@@ -41,20 +41,20 @@ public:
 
 
 class MySerialServer: public Server{
-    public:
-        bool continueFlag = false;
-       virtual void open(int port,ClientHandler& c);
-       virtual  bool stop(int socet);
+public:
+    bool continueFlag = false;
+    virtual void open(int port,ClientHandler* c);
+    virtual  bool stop(int socet);
 
 
-       virtual void start(int port);
+    //virtual void start(int port);
 
 
-       MySerialServer() ;
-       ~MySerialServer();
+    MySerialServer() ;
+    ~MySerialServer();
 
-        
-    };
+
+};
 
 
 
@@ -62,13 +62,20 @@ class MySerialServer: public Server{
 
 class MyTestClientHandler: public ClientHandler{
 
-    public:
-    FileCacheManager& file_cache_manager ;
-    StringRevers stringRevers;
+public:
 
+    Solver<string,string>*solver;
+    CacheManager<string,string> *cacheManager;
 
     virtual void WriteAnswerToClient(int outPutStream,string question);
     virtual void handlerClient(int outputStream,int inputStream );
+
+
+
+    MyTestClientHandler(Solver<string,string> *stringRevers, CacheManager<string,string> *file_cache_manager ){
+        this->solver = stringRevers;
+        this->cacheManager= file_cache_manager;
+    }
 
 };
 
@@ -87,13 +94,15 @@ public:
 
 
 
+
 };
+/*
 namespace boot {
     class Main {
     public:
         int main(int argc, char *args[]);
     };
-}
+}*/
 
 
 

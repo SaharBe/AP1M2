@@ -6,8 +6,9 @@
 #include <unordered_map>
 #include "Solver.h"
 #include "CacheManager.h"
-#include "ObjectAdapter.h"
+#include "StringRevers.h"
 #include "MatrixSolver.h"
+
 
 #ifndef UNTITLED_MYPARALLELSERVER_H
 #define UNTITLED_MYPARALLELSERVER_H

@@ -1,7 +1,13 @@
 
 #include "MyParallelServer.h"
 
-
+#include <iostream>
+#include <thread>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <unistd.h>
+#include <pthread.h>
+#include <sys/time.h>
 
 
 
@@ -29,7 +35,7 @@ void  MyParallelServer :: open(int port,ClientHandler& c){
 
 
 
-
+    std:: vector<std::thread> threadVector;
     while(continueFlag) {
         timeval tv;
         tv.tv_sec = 30;
@@ -37,7 +43,7 @@ void  MyParallelServer :: open(int port,ClientHandler& c){
         setsockopt(socketfd, SOL_SOCKET, SO_RCVTIMEO, (const char*)&tv, sizeof tv);
         int client_socket = accept(socketfd, (struct sockaddr *) &address, (socklen_t *) &address);
 
-        vector<thread> threadVector;
+
         if (client_socket = -1){
             if(!continueFlag){
                 break;
@@ -54,7 +60,7 @@ void  MyParallelServer :: open(int port,ClientHandler& c){
         }
         else {
             std::thread t(&ClientHandler::handlerClient, &c, client_socket, client_socket);
-            threadVector.emplace_back(t);
+            threadVector.emplace_back(move(t));
             t.detach();
         }
 
