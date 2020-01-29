@@ -7,58 +7,93 @@
 
 #include <iostream>
 #include <unordered_map>
-#include <hash_map>
 #include <vector>
+#include <queue>
 
 #include "Searchable.h"
 #include "Searcher.h"
 #include "State.h"
+#include <map>
 
 using namespace std;
 
-template <class T>
-class BFS: public Searcher<T>{
-public:
+template <class T, class S>
+class BFS: public Searcher<T, S> {
+    vector<State<T>> search (const Searchable<T>& searchable){
+        map<State<T>*, bool> visited;
+        map<State<T>*, State<T>*> parents;
+        queue<State<T>*> stateQueue;
+        vector<State<T>> solutionStateList;
 
-    vector<State<T>*> openList;
+        stateQueue.push(&searchable.getInitialState());
 
-    hash<State<T>*> closed ;
+        while(!stateQueue.empty()) {
+            State<T> *curState = stateQueue.front();
+            stateQueue.pop();
+            visited[curState] = true;
 
+            if (*curState != searchable.getGoalState()) {
+                vector<State<T>> possibleStates = searchable.getAllPossibleStates(*curState);
 
-    template <T>
-  /*  void addToOpenList(State<T> ) {
-        ;
-    }*/
-     State<T> backTrace(){
-         return openList.back();
-     };
-
-     Solver search (Searchable<T> searchable){
-        openList.clear();
-        //addToOpenList(searchable.getInitialState());
-        openList.push_back(searchable.getInitialState());
-
-        while(openList.size() > 0){
-            State<T> n = Searcher<T>::popOpenList();//removes the best state
-            closed.Add(n);
-
-            if(n.Equals(searchable.getGoalState())){
-                return backTrace;//privet method, back traces through the parents
-                //calling the delegated method , returns a list of states with n as a parent
-
-            }
-            vector<State<T>> succerssors = searchable.getAllPossibleStates(n);
-            for(State<T> state: succerssors){
-                if(!closed.find(state) && !openList.find(state)){
-
+                for (int i = 0; i < possibleStates.size(); i++) {
+                    if (visited.count(&possibleStates[i]) == 0) {
+                        stateQueue.push(&possibleStates[i]);
+                        parents[&possibleStates[i]] = curState;
+                    }
                 }
-            }
+            } else {
+                while (parents.count(curState) != 0) {
+                    solutionStateList.insert(solutionStateList.begin(), *curState);
+                    curState = parents[curState];
+                }
 
+                solutionStateList.insert(solutionStateList.begin(), *curState); // insert inital state
+                break;
+            }
         }
 
-    };
+        return solutionStateList;
+    }
+
+/*
+    // Mark all the vertices as not visited
+    bool *visited = new bool[V];
+    for(int i = 0; i < V; i++)
+    visited[i] = false;
+
+    // Create a queue for BFS
+    queue<int> queue;
+
+    // Mark the current node as visited and enqueue it
+    visited[s] = true;
+    queue.push_back(s);
+
+    // 'i' will be used to get all adjacent
+    // vertices of a vertex
+    list<int>::iterator i;
+
+    while(!queue.empty())
+    {
+        // Dequeue a vertex from queue and print it
+        s = queue.front();
+        cout << s << " ";
+        queue.pop_front();
+
+        // Get all adjacent vertices of the dequeued
+        // vertex s. If a adjacent has not been visited,
+        // then mark it visited and enqueue it
+        for (i = adj[s].begin(); i != adj[s].end(); ++i)
+        {
+            if (!visited[*i])
+            {
+                visited[*i] = true;
+                queue.push_back(*i);
+            }
+        }
+    } */
 
 
 };
+
 
 #endif //UNTITLED_BFS_H

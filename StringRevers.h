@@ -1,7 +1,7 @@
 
 
-#ifndef UNTITLED_OBJECTADAPTER_H
-#define UNTITLED_OBJECTADAPTER_H
+#ifndef UNTITLED_STRINGREVERS_H
+#define UNTITLED_STRINGREVERS_H
 
 
 #include "Solver.h"
@@ -13,18 +13,7 @@ using namespace std;
 class StringRevers: public Solver<string, string>{
 public:
 
-   string solve(string problem){
-       string p = problem;
-
-       int n = p.length();
-
-       // Swap character starting from two
-       // corners
-       for (int i = 0; i < n / 2; i++)
-           swap(p[i], p[n - i - 1]);
-
-       return problem;
-    }
+   string solve(string problem);
 
 
 };
@@ -51,4 +40,4 @@ public:
 
 
 
-#endif //UNTITLED_OBJECTADAPTER_H
+#endif //UNTITLED_STRINGREVERS_H

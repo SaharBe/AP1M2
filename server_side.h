@@ -4,9 +4,11 @@
 #include <iostream>
 #include <fstream>
 #include <unordered_map>
-#include "CacheManager.h"
 #include "Solver.h"
-#include "ObjectAdapter.h"
+#include "CacheManager.h"
+#include "StringRevers.h"
+#include "MatrixSolver.h"
+#include <vector>
 
 
 
@@ -19,57 +21,89 @@ using namespace std;
 
 
 class ClientHandler{
-    public:
-        virtual void handlerClient(int outputStream,int inputStream ) = 0;
+public:
+    virtual void handlerClient(int outputStream,int inputStream ) = 0;
 
 
 };
 
 
 class Server {
+
+
 public:
-    virtual void open(int port,ClientHandler& c) = 0;
-    virtual bool stop() =0;
+    virtual void open(int port,ClientHandler* c) = 0;
+    virtual bool stop(int socet) =0;
+
+
 };
 
 
 
 class MySerialServer: public Server{
-    public:
-       virtual void open(int port,ClientHandler& c);
-       virtual  bool stop();
-       virtual void start(int port);
-        void threadLoop(int port,ClientHandler& c);
-
-       MySerialServer();
-       ~MySerialServer();
-
-        
-    };
+public:
+    bool continueFlag = true;
+    virtual void open(int port,ClientHandler* c);
+    virtual  bool stop(int socet);
 
 
-class MyParallelServer: public Server{
+    //virtual void start(int port);
+
+
+    MySerialServer() ;
+    ~MySerialServer();
+
 
 };
+
+
 
 
 
 class MyTestClientHandler: public ClientHandler{
 
-    public:
-    FileCacheManager& file_cache_manager ;
-    StringRevers stringRevers;
+public:
 
+    Solver<string,string>*solver;
+    CacheManager<string,string> *cacheManager;
 
-    virtual void WriteAnswerToClient(int outPutStream,Problem question);
+    virtual void WriteAnswerToClient(int outPutStream,string question);
     virtual void handlerClient(int outputStream,int inputStream );
+    string  fromCharToString(char *question);
+
+
+
+    MyTestClientHandler(Solver<string,string> *stringRevers, CacheManager<string,string> *file_cache_manager ){
+        this->solver = stringRevers;
+        this->cacheManager= file_cache_manager;
+    }
 
 };
+
+class  MyClientHandler : public ClientHandler{
+
+public:
+    Solver<string,string> *solver;
+    CacheManager<string,string> *cacheManager;
+
+    virtual void WriteAnswerToClient(int outPutStream,string question);
+    virtual void handlerClient(int outputStream,int inputStream );
+
+
+
+
+
+
+
+
+};
+/*
 namespace boot {
     class Main {
+    public:
         int main(int argc, char *args[]);
     };
-}
+}*/
 
 
 

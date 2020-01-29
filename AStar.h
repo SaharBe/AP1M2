@@ -7,7 +7,6 @@
 
 #include <iostream>
 #include <unordered_map>
-#include <hash_map>
 #include <vector>
 
 #include "Searchable.h"
@@ -17,8 +16,8 @@
 using namespace std;
 
 
-template <class T>
-class AStar: public Searcher<T>{
+template <class T, class S>
+class AStar: public Searcher<T, S>{
 
 
 };

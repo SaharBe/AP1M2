@@ -7,7 +7,6 @@
 
 #include <iostream>
 #include <unordered_map>
-#include <hash_map>
 #include <vector>
 #include <list>
 
@@ -18,23 +17,51 @@
 
 using namespace std;
 
-template <class T>
-class DFSSearcher: public Searcher<T>{
+
+template <class T, class S>
+class DFSSearcher: public Searcher<T, S>{
     public:
-        vector<State<T>*> search (Searchable<T> searchable)
+        vector<State<T>> search (const Searchable<T>& searchable)
         {
-            vector<State<T>*> listOfStates;
-            vector<State<T>*> visited;
+            vector<State<T>> resultStateList;
+            resultStateList.push_back(searchable.getInitialState());
+            vector<State<T>> visited;
+
+            searchRec(resultStateList, searchable.getInitialState(), visited, searchable);
+
+            return resultStateList;
         }
 
-        void searchRec(vector<StateeState<T>* state, vector<State<T>*>& visited)
-        {
-            if(find(visited.begin(), visited.end(), state) == visited.end()) // state not yet visited
+        bool searchRec(vector<State<T>>& states, const State<T>& state, vector<State<T>>& visited, const Searchable<T>& searchable) {
+            if(state == searchable.getGoalState())
+            {
+                states.push_back(state);
+                return true;
+            } else if(find(visited.begin(), visited.end(), state) != visited.end()) // state already visited
+            {
+                return false;
+            }
+            else // state not yet visited
             {
                 visited.push_back(state);
+                states.push_back(state);
+                vector<State<T>> possibleStates = searchable.getAllPossibleStates(state);
 
+                for(int i = 0; i < possibleStates.size(); ++i)
+                {
+                    int statesCostFromPath = searchRec(states, possibleStates[i], visited, searchable);
+
+                    if(statesCostFromPath)
+                    {
+                        return statesCostFromPath;
+                    }
+                }
+
+                states.pop_back();
+                return false;
             }
         }
+
 };
 
 #endif //UNTITLED_DFS_H

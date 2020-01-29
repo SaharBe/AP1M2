@@ -2,9 +2,10 @@
 // Created by sahar on 23/01/2020.
 //
 
-#include "ObjectAdapter.h"
-/*
-Solution StringRevers::solve(Problem* problem)
+#include "StringRevers.h"
+
+
+string StringRevers::solve(string problem)
 {
     int n = problem.length();
 
@@ -16,7 +17,7 @@ Solution StringRevers::solve(Problem* problem)
 
     return  problem;
 
-}*/
+}
 
 
 

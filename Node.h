@@ -29,6 +29,10 @@ public:
     Node rightNode();
     Node leftNode();
 
+    int getRow();
+    int getCol();
+
+
 };
 
 
