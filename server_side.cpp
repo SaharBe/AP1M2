@@ -64,7 +64,7 @@ void  MySerialServer :: open(int port,ClientHandler* c){
 
         }else {
 
-            std::thread t(&ClientHandler::handlerClient, &c, client_socket, client_socket);
+            std::thread t(&ClientHandler::handlerClient, c, client_socket, client_socket);
 
             t.join();
         }
@@ -91,31 +91,46 @@ MySerialServer::~MySerialServer() {
 }
 
 
+string MyTestClientHandler::fromCharToString(char *question) {
+    string questionString = "";
+    int i = 0;
+    char c;
+    do {
+
+        c = question[i];
+        questionString += c;
+        i++;
 
 
+    } while (c != '\0');
+    return questionString;
+}
 
 void MyTestClientHandler::handlerClient(int outputStream, int inputStream) {
     while (true) {
         char question[1024];
+        string stringQuestion;
         int valRead = read(inputStream, question, 1024);
+        stringQuestion = fromCharToString(question);
+        stringQuestion = stringQuestion.erase(stringQuestion.find("\r"));
         if (valRead == -1) {
             cout << "error in reading" << endl;
             return;
         }
 
         //if question in empty,the client didnt sent a question yet,keep waiting for it
-        if (strlen(question) == 0) {
+        if (stringQuestion .length() == 0) {
             continue;
         }
         //if client sent in the stream "end",go back to server which waiting for other client
-        if (question == "end") {
+        if (stringQuestion  == "end") {
             break;
         }
             //else,there is a question and write the answer to the output stream
         else {
 
 
-               WriteAnswerToClient(outputStream, question);
+               WriteAnswerToClient(outputStream, stringQuestion );
 
 
         }
@@ -138,6 +153,10 @@ void MyTestClientHandler::WriteAnswerToClient(int outPutStream,string question) 
         cacheManager->SaveSolution(question,answer);
 
     }
+    answer+="\r\n";
+    write(outPutStream,answer.c_str(),answer.length());
+
+
 
 }
 
@@ -188,7 +207,7 @@ void MyClientHandler::handlerClient(int outputStream, int inputStream) {
 
 //int boot::Main::
 int main(int argc, char *args[]) {
-    int port = stoi(args[1]);
+    double port = stod(args[1]);
 
     Server* server = new MySerialServer();
   //  StringRevers stringRevers;
@@ -198,10 +217,10 @@ int main(int argc, char *args[]) {
     server->open(port, new MyTestClientHandler(new StringRevers,new FileCacheManager));
 
 ;
-    this_thread::sleep_for(chrono::milliseconds(100000));
 
     server->stop(port);
     delete (server);
+    return 0;
 
 
 }

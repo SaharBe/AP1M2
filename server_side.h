@@ -42,7 +42,7 @@ public:
 
 class MySerialServer: public Server{
 public:
-    bool continueFlag = false;
+    bool continueFlag = true;
     virtual void open(int port,ClientHandler* c);
     virtual  bool stop(int socet);
 
@@ -69,6 +69,7 @@ public:
 
     virtual void WriteAnswerToClient(int outPutStream,string question);
     virtual void handlerClient(int outputStream,int inputStream );
+    string  fromCharToString(char *question);
 
 
 
