@@ -3,6 +3,7 @@
 //
 
 #include "Node.h"
+#include "State.h"
 
 Node Node::upNode() {
     return Node(this->x -1, this->y);

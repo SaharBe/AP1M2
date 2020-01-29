@@ -5,24 +5,27 @@
 #ifndef UNTITLED_STATE_H
 #define UNTITLED_STATE_H
 
+#include "Node.h"
+
 template <typename T>
 class State{
 private:
-    T id;
+    T state;
     double cost;
     State<T>* cameFrom;
 
 public:
 
-    State(T state){
+    State<T>(T state, double cost){
         this->state = state;
         this->cost = cost;
+        this->cameFrom = cameFrom;
     }
 
 
-    bool operator==(const State<T>& other)
+    bool operator==(State other)
     {
-        return id == other.id;
+        return state == other.state;
     }
 
     bool operator<(const State<T>& other){
@@ -34,7 +37,7 @@ public:
         return cost;
     }
     T getState(){
-        return id;
+        return state;
     }
 };
 

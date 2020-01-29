@@ -7,8 +7,9 @@
 
 #include "Searchable.h"
 #include <string>
-
+#include "search.h"
 #include "Node.h"
+
 using namespace std;
 
 
@@ -68,18 +69,8 @@ public:
         return ((*this)[node] != -1);
     }
 
-    void initialize(const vector<string>& info){
-        // Creating one big continuous block of memory
-        State<Node>** matrix = new State<Node> *[this->rows * this->rows];
 
-        // Each cell in the matrix is a pointer to a State object
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                matrix[i * cols + j] = new State<Node*>(new Node(i, j));
-            }
-        }
 
-    }
 
 
 };

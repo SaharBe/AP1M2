@@ -130,7 +130,7 @@ void MyTestClientHandler::handlerClient(int outputStream, int inputStream) {
         else {
 
 
-               WriteAnswerToClient(outputStream, stringQuestion );
+            WriteAnswerToClient(outputStream, stringQuestion );
 
 
         }
@@ -145,7 +145,7 @@ void MyTestClientHandler::handlerClient(int outputStream, int inputStream) {
 void MyTestClientHandler::WriteAnswerToClient(int outPutStream,string question) {
     string answer;
     if(cacheManager->DoesSolutionExist(question)) {
-          answer = cacheManager->returnSolution(question);
+        answer = cacheManager->returnSolution(question);
     }
     else{
 
@@ -210,13 +210,13 @@ int main(int argc, char *args[]) {
     double port = stod(args[1]);
 
     Server* server = new MySerialServer();
-  //  StringRevers stringRevers;
+    //  StringRevers stringRevers;
     //FileCacheManager fc;
 
 
     server->open(port, new MyTestClientHandler(new StringRevers,new FileCacheManager));
 
-;
+    ;
 
     server->stop(port);
     delete (server);
@@ -224,4 +224,3 @@ int main(int argc, char *args[]) {
 
 
 }
-
