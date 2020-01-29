@@ -79,7 +79,7 @@ void FileCacheManager::UpdateCacheMap(string problem, string solution) {
 
 string FileCacheManager::ReturnSolutionFromFiles(string problem) {
     ifstream readFileStream;
-    readFileStream.open(problem);
+    readFileStream.open(problem,fstream::in);
     if(!readFileStream.is_open()){
         readFileStream.close();
         throw invalid_argument("error in opening file");
@@ -92,16 +92,11 @@ string FileCacheManager::ReturnSolutionFromFiles(string problem) {
 }
 bool FileCacheManager::DoesSolutionExistsInFiles(string problem) {
     ifstream readFileStream;
-    readFileStream.open(problem);
+    readFileStream.open(problem,fstream::in);
     if(!readFileStream.is_open()){
-        readFileStream.close();
-        throw invalid_argument("error in opening file");
-    }
-    //if file is empty,return false
-    if(readFileStream.peek() == ifstream::traits_type::eof()){
-        readFileStream.close();
         return false;
     }
+
     else{
         return true;
     }
@@ -110,12 +105,12 @@ bool FileCacheManager::DoesSolutionExistsInFiles(string problem) {
 
 void FileCacheManager::SaveSolutionInFiles(string problem, string solution) {
     ofstream writeToFileStream;
-    writeToFileStream.open(problem);
+    writeToFileStream.open(problem,fstream::out);
     if(!writeToFileStream.is_open()){
         writeToFileStream.close();
         throw invalid_argument("error in opening file");
     }
-    writeToFileStream << &solution;
+    writeToFileStream << solution;
     writeToFileStream.close();
 }
 
