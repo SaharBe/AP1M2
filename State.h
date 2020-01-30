@@ -7,7 +7,7 @@
 
 #include "Node.h"
 
-template <typename T>
+template <class T>
 class State{
 private:
     T state;
@@ -22,6 +22,10 @@ public:
         this->cameFrom = cameFrom;
     }
 
+    State<T>(){
+
+    }
+
 
     bool operator==(State other)
     {
@@ -32,11 +36,11 @@ public:
         return other.cost < this->cost;
     }
 
-    double getCost()
+    double getCost() const
     {
         return cost;
     }
-    T getState(){
+    T getState() const{
         return state;
     }
 };

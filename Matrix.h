@@ -14,62 +14,58 @@ using namespace std;
 
 
 
-
-template <class T>
-class Matrix: public Searchable<T> {
+class Matrix: public Searchable<Node> {
 private:
 
     int cols;
     int rows;
 
 
-    State<T> start;
-    State<T> end;
+
+    State<Node> start;
+    State<Node> end;
+    vector<vector<State<Node>>> mat;
+
+
+
 
 public:
-    Matrix(int cols, int rows,State<T> start, State<T> end ){
-        this->cols = cols;
-        this->rows = rows;
-        this->numOfCells =  cols* rows;
-
-
+    Matrix(int cols, int rows,const State<Node>& start, const State<Node>& end ,const vector<vector<State<Node>>>& mat)
+        : start(start), end(end), cols(cols), rows(rows), mat(mat){
     }
+
+
     ~Matrix(){
-        delete start;
-        delete end;
+
     }
-    State<T> getInitialState() {
+    State<Node> getInitialState()const {
         return start;
     }
-    State<T> getGoalState() {
+    State<Node> getGoalState()const {
         return end;
     }
 
-    vector<State<T>> getAllPossibleStates(State<Node> *state) {
-        std:: vector<State<Node>*> result;
 
-        Node curr = state->getState();
+    vector<State<Node>> getAllPossibleStates(const State<Node>& state) const{
+        std:: vector<State<Node>> result;
+
+
+        Node curr = state.getState();
         std::vector<Node> steps = {curr.downNode(), curr.upNode(), curr.rightNode(), curr.leftNode()};
-        for (Node step : steps) {
-            if (validStep(step)) {
-                result.push_back(new State<Node>((*this)[step] + state->getCost()));
+        for (Node& step : steps) {
+            //up
+           if (step.getRow() < rows && step.getRow() >= 0 && step.getCol() < cols && step.getCol() >= 0) {
+               double cost = mat[curr.getRow()][curr.getCol()].getCost();
+
+               if(cost != -1)
+               {
+                   result.push_back(State<Node>(step, cost));
+               }
+
             }
         }
         return result;
-
-
     }
-
-    bool validStep(Node node) {
-        if ((node.getRow() >= this->rows) ||
-        (node.getRow() < 0) || (node.getCol() >= this->cols) || (node.getCol() < 0))
-        {
-            return false;
-        }
-        return ((*this)[node] != -1);
-    }
-
-
 
 
 

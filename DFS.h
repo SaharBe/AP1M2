@@ -18,8 +18,8 @@
 using namespace std;
 
 
-template <class T, class S>
-class DFSSearcher: public Searcher<T, S>{
+template <class T>
+class DFSSearcher: public Searcher<T>{
     public:
         vector<State<T>> search (const Searchable<T>& searchable)
         {

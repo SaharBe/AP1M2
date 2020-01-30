@@ -17,18 +17,19 @@
 
 using namespace std;
 
-template <class T, class S>
-class BFS: public Searcher<T, S> {
+template <class T>
+class BFS: public Searcher<T> {
+
     vector<State<T>> search (const Searchable<T>& searchable){
         map<State<T>*, bool> visited;
         map<State<T>*, State<T>*> parents;
-        queue<State<T>*> stateQueue;
+        queue<State<T>> stateQueue;
         vector<State<T>> solutionStateList;
 
-        stateQueue.push(&searchable.getInitialState());
+        stateQueue.push(searchable.getInitialState());
 
         while(!stateQueue.empty()) {
-            State<T> *curState = stateQueue.front();
+            State<T> curState = stateQueue.front();
             stateQueue.pop();
             visited[curState] = true;
 

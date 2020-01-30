@@ -17,8 +17,8 @@
 
 using namespace std;
 
-template <class T, class S>
-class BestFS: public Searcher<T, S>{
+template <class T>
+class BestFS: public Searcher<T>{
 private:
     priority_queue<State<T>> open;
 

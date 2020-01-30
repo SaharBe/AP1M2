@@ -1,3 +1,7 @@
+
+#include <stdio.h>
+#include <string.h>
+#include <iostream>
 #include <stdio.h>
 #include <string.h>
 #include <iostream>
@@ -6,22 +10,22 @@
 #include "Solver.h"
 #include "CacheManager.h"
 #include "StringRevers.h"
-#include "MatrixSolver.h"
+
 #include <vector>
 
 
 
-
-using namespace std;
-
 #ifndef UNTITLED_SERVER_SIDE_H
 #define UNTITLED_SERVER_SIDE_H
+
+ using namespace std;
 
 
 
 class ClientHandler{
 public:
     virtual void handlerClient(int outputStream,int inputStream ) = 0;
+
 
 
 };
@@ -72,7 +76,7 @@ public:
 
 
 
-    MyTestClientHandler(Solver<string,string> *stringRevers, CacheManager<string,string> *file_cache_manager ){
+   MyTestClientHandler(Solver<string,string> *stringRevers, CacheManager<string,string> *file_cache_manager ){
         this->solver = stringRevers;
         this->cacheManager= file_cache_manager;
     }
@@ -85,14 +89,16 @@ public:
     Solver<string,string> *solver;
     CacheManager<string,string> *cacheManager;
 
-    virtual void WriteAnswerToClient(int outPutStream,string question);
+
     virtual void handlerClient(int outputStream,int inputStream );
+    string  fromCharToString(char *question);
 
+    MyClientHandler(Solver<string,string>* solver, CacheManager<string,string>* cacheManager ){
 
-
-
-
-
+        this->solver = solver;
+      this->cacheManager= cacheManager;
+    }
+    ~MyClientHandler() = default;
 
 
 };
@@ -113,3 +119,7 @@ namespace boot {
 
 
 #endif //UNTITLED_SERVER_SIDE_H
+
+
+
+

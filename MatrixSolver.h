@@ -21,25 +21,30 @@
 #include "AStar.h"
 
 
-template <class T>
 class MatrixSolver: public Solver< string, string>{
 
-    static int rows;
-    static int cols;
-    static string endd;
-    static string startt;
+     int rows;
+     int cols;
+     string endd;
+     string startt;
+     Node start;
+     Node end;
+     State<Node> initi;
+     State<Node> goal;
+
+public:
     ///
 
   //  make the matrix from the string
     ///
   // Searcher<Matrix<Node>>* searcher = new BestFS ;
 
-  Searcher<Matrix<Node>,  vector<State<T>>> searcher ;
+  Searcher<Node>* searcher;
+  string problem;
 
-public:
 
     ///ctor
-    MatrixSolver( const string& prob){
+    MatrixSolver( Searcher<Node>* searcher): searcher(searcher){
 
     }
     vector<string> split(string str, string sep) {
@@ -81,7 +86,7 @@ public:
         if(str[0] == '(')
             str.erase(str.begin());
         if(str[str.size() - 1] ==  ')'){
-            str.erase(str.back());
+            str.pop_back();
         }
         int i = 0;
         string x = "";
@@ -122,31 +127,34 @@ public:
 
             }
         }
+        lines.push_back(tempLine);
 
 
         char tempX = ' ';
 
         //check if back == "end" !!
         // if(lines.back() == "end"){
+        //pop "end"
         lines.pop_back();
         /////
         int i =0;
-         endd = lines.back();
-        State<Node> end = createNode(endd);
+         endd = lines.back(); // (36,36)
+         end = createNode(endd);
+
         lines.pop_back();
          startt = lines.back();
-        State<Node> start = createNode(startt);
+         start = createNode(startt);
         lines.pop_back();
-        State<Node> start0 = start;
-        State<Node> end0 = end;
+    //    State<Node> start0(start, );
+    //    State<Node> end0 = end;
 
         ////
 
 
-        rows = lines.size() ; // num of vectors -3
+        rows = lines.size() ;
         string random = lines.front();
         cols = numofMatrixCols(random);
-        Matrix<T> matrix = new Matrix<T>(cols,  rows,start0,  end0);
+       // Matrix<State<Node>> matrix = new Matrix<Node>(cols,  rows,start0,  end0);
 
         //return matrix;
 
@@ -164,6 +172,7 @@ public:
                 temp = temptemp +prob[i];
                 i++;
             }
+            i++;
             stringsVector.push_back(temp);
             temp = "";
             temptemp = "";
@@ -171,9 +180,9 @@ public:
         return stringsVector;
     }
     //only for square matrix!!
-    vector<vector<State<T>>> makeStringsTONodes (vector<string> stringVector){
-        vector<vector<State<T>>> matrix ;
-        vector<State<T>> line;
+    vector<vector<State<Node>>> makeStringsTONodes (vector<string> stringVector){
+        vector<vector<State<Node>>> matrix ;
+        vector<State<Node>> line;
         int numOfLines = stringVector.size();
         int numOfNodesInLine = numOfLines;
         int i, j;
@@ -187,30 +196,47 @@ public:
                     value = value + stringVector.front()[n];
                     n++;
                 }
-                cost = stod(value);
-                Node* node = new Node(i,j);
-                State<Node*> state(node,cost);
+                cost = stoi(value);
+                Node node(i, j);
+                if(node == start){
+                   initi=State<Node>(node, cost);
+                   line.push_back(initi);
+                }else if(node == end){
+                    goal=State<Node>(node, cost);
+                    line.push_back(goal);
+                }
+                else{
+                    State<Node> state(node,cost);
+                    line.push_back(state);
+                }
                 value = "";
-                line.push_back(state);
+                n++;
+
+              //  line.push_back(state);
+
             }
             matrix.push_back(line);
-            line.empty();
+            line.clear();
+            stringVector.erase(stringVector.begin());
+            n=0;
         }
+
         return matrix;
 
     }
 
 
 
-    virtual string solve(string problem){
+     virtual string solve(string problem){
 
         createMatrix(problem);
-        Matrix<T> matrix(cols, rows,startt, endd);
-        vector<string> vec = matrix.createVectorOfstrings(problem,rows);
-        vector<vector<State<Node>>> mat = matrix.makeStringsTONodes(vec);
+        vector<string> vec = createVectorOfstrings(problem,rows);
+        vector<vector<State<Node>>> mat = makeStringsTONodes(vec);
+      //  Matrix matrix(cols, rows,initi, goal, mat);
+         Matrix* matrix= new Matrix(cols, rows,initi, goal, mat);
 
 
-        vector<State<T>> ans = searcher->search(mat);
+        vector<State<Node>> ans = searcher->search(*matrix);
         static double costAll = 0;
 
         string solution = "";

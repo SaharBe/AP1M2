@@ -18,8 +18,8 @@ public:
     virtual double evaluateFromNode(State<T> *current) = 0;
 };
 
-template <class T, class S>
-class AStar : public BestFS<S, T> {
+template <class T>
+class AStar : public BestFS<T> {
     Heuristic<T> *m_heuristic;
 
 protected:
@@ -37,7 +37,7 @@ public:
 
     virtual vector<State<T> *> search(Searchable<T> *searchable) {
         m_heuristic->setGoal(searchable->getGoalState());
-        return BestFS<S,T>::search(searchable);
+        return BestFS<T>::search(searchable);
     }
 };
 

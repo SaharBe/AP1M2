@@ -23,6 +23,9 @@ public:
         this->y = y;
 
     }
+    Node(){
+
+    }
     string get(int x,int y);
 
     Node upNode();

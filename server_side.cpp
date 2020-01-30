@@ -14,8 +14,6 @@ using namespace std;
 //using namespace server_side;
 
 
-
-
 void  MySerialServer :: open(int port,ClientHandler* c){
 
     int socketfd = socket(AF_INET,SOCK_STREAM,0);
@@ -80,6 +78,7 @@ void  MySerialServer :: open(int port,ClientHandler* c){
 
 bool MySerialServer::stop(int socket) {
     continueFlag = false;
+    close(socket);
     return continueFlag;
 }
 
@@ -162,7 +161,7 @@ void MyTestClientHandler::WriteAnswerToClient(int outPutStream,string question) 
 
 void MyClientHandler::handlerClient(int outputStream, int inputStream) {
     string line = "";
-    string problem;
+    string problem = "";
     char buffer[1024];
     char c;
     int i;
@@ -204,23 +203,22 @@ void MyClientHandler::handlerClient(int outputStream, int inputStream) {
         throw "error in writing to client";
     }
 }
-
+namespace boot{
 //int boot::Main::
 int main(int argc, char *args[]) {
     double port = stod(args[1]);
 
-    Server* server = new MySerialServer();
+    Server *server = new MySerialServer();
     //  StringRevers stringRevers;
     //FileCacheManager fc;
 
 
-    server->open(port, new MyTestClientHandler(new StringRevers,new FileCacheManager));
+    server->open(port, new MyTestClientHandler(new StringRevers, new FileCacheManager));
 
-    ;
 
     server->stop(port);
     delete (server);
     return 0;
 
-
+}
 }
