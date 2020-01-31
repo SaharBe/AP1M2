@@ -20,10 +20,26 @@ public:
 
 template <class T>
 class AStar{
+
     Heuristic<T> *m_heuristic;
 
 protected:
     virtual double costBetweenNodes(State<T> *start, State<T> *end) const {
+
+        if (start == end) {
+            return m_heuristic->evaluateFromNode(end);
+        }
+        return start->getCost() + end->getOriginalCost();
+    }
+
+public:
+    explicit AStar(Heuristic<T> *h) : m_heuristic(h) {}
+
+    virtual ~AStar() {}
+
+    virtual vector<State<T> *> search(Searchable<T> *searchable) {
+        m_heuristic->setGoal(searchable->getGoalState());
+        return BestFS<T>::search(searchable);
 
     }
 };

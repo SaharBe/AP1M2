@@ -82,11 +82,13 @@ public:
     }
 
     Node createNode(string str){
+
       /**  if(str[0] == '(')
             str.erase(str.begin());
         if(str[str.size() - 1] ==  ')'){
             str.pop_back();
         }**/
+
         int i = 0;
         string x = "";
         string y = "";
@@ -129,6 +131,7 @@ public:
 
 
         char tempX = ' ';
+
 
         /////
         int i =0;

@@ -168,13 +168,14 @@ void MyClientHandler::handlerClient(int outputStream, int inputStream) {
     bool end = false;
 
     while (!end) {
-
         int valRead = recv(inputStream, buffer, sizeof(buffer), 0);
+
         if (valRead == -1) {
             cout << "error in reading" << endl;
             return;
         }
         for (i = 0; i < valRead; i++) {
+
             if (!(line.compare("end"))){
                 end = true;
                 break;
@@ -185,6 +186,7 @@ void MyClientHandler::handlerClient(int outputStream, int inputStream) {
                 line="";
                 continue;
             }
+
             line += c;
             continue;
         }

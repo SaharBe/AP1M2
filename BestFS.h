@@ -1,97 +1,100 @@
-//
-// Created by sahar on 22/01/2020.
-//
 
-#ifndef UNTITLED_BESTFS_H
-#define UNTITLED_BESTFS_H
 
-#include <iostream>
-#include <unordered_map>
-#include <vector>
-#include <queue>
+#ifndef EX4_BESTFIRSTSEARCH_H
+#define EX4_BESTFIRSTSEARCH_H
+
 #include <set>
-#include "Searchable.h"
 #include "Searcher.h"
+#include "CostComparator.h"
 #include "State.h"
-#
 
-using namespace std;
-
-template <class T, class S>
-class BestFS: public Searcher<T, S>{
-private:
-    priority_queue<State<T>> open;
+template<class T>
+class BestFS : public Searcher<T> {
 
 public:
+    vector<State<T>> backTrace(State<T> s) {
+        vector<State<T> > backTracevector;
+        State<T>* state = &s;
+        ///enter all the back Trace to the vector
+        while (state->getCameFrom() != nullptr) {
+            backTracevector.insert(backTracevector.begin(), s);
+            state = state->getCameFrom();
+        }
+        ///
+        if (backTracevector.empty()) {
+            return backTracevector;
+        }
+        //return all back trace
+        backTracevector.insert(backTracevector.begin(), s);
+        return backTracevector;
+    }
 
-    vector<State<T>*> openList;
+    virtual vector<State<T>> search(const Searchable<T>& searchable) {
+        multiset<State<T> , CostComparator<T>> open;
+        set<State<T>> closed;
 
-    set<State<T>*> closed ;
+        State<T> curr = searchable.getInitialState();
+        open.insert(curr);
 
-
-    virtual vector<State<T>> search (const Searchable<T>& searchable) {
-        this->evaluatedNodes = 0;
-
-
-        State<T> *goal = searchable->getGoalState();
-
-        open.push(searchable.getInitialState());
-        set<State<T>*> closed;
-
-        while(!open.empty())
-        {
-            this->getNumberOfNodesEvaluated()++;
-
-            State<T> best = open.pop();
-        //*    closed.insert(&best);
-
-            if(best == searchable.getGoalState())
-            {
-                vector<State<T> *> output = this->backTrace(searchable->getInitialState(), best);
-                this->clearAll(output,&open);
-                return output;
+        while (!open.empty()) {
+            curr = popFromOpen(open);
+            closed.insert(curr);
+            if (curr == searchable.getGoalState()) {
+                break;
             }
-            else{
-                vector<State<T>> successorts = searchable.getAllPossibleStates(best);
 
-                for(int i = 0; i < successorts.size(); i++)
-                {
-//                    if(closed.count(&successorts[i]) == 0 && open.){
+            vector<State<T>> successors = searchable.getAllPossibleStates(curr);
+            for (State<T> succ : successors) {
+                // Ignoring walls
+                if (succ.getCost() < 0) {
+                    continue;
+                }
+                if (closed.find(succ) != closed.end()) {
+                    continue;
+                }
+                // If 'succ' isn't in any of the lists - update it and add to 'open'
+                if (open.find(succ) == open.end()) {
+                    succ.setCameFrom(curr);
+                    succ.setCost(succ.getCost() + curr.getCost());
+                    open.insert(succ);
+                    continue;
+                }
+                // If there is a better path - update cost
+                double cost = costBetweenNodes(curr, succ);
+                if (cost < succ.getCost()) {
+                    succ.setCost(cost);
 
+                    // If it's a new path
+                    if (succ.getCameFrom() != &curr) {
+                        succ.setCameFrom(curr);
+                        // It's the same path as before - remove the node and insert back to update priority
+                    } else {
+                        open.erase(succ);
+                        open.insert(succ);
                     }
                 }
             }
         }
 
-
-    /*virtual void clearAll(vector<State<T> *> output, ) {
-        State<T> *temp;
-        while (!DB->emptyOpen()) {
-            State<T> * temp =DB->popFromOpen();
-            if(!DB->isExistVector(temp)){
-                delete (temp);
-            }
-        }
-        while (!DB->emptyClosed()) {
-
-            temp = DB->popFromClosed();
-
-            for (int i = 0; i < output.size(); i++) {
-                if (output[i] == temp) {
-                    break;
-                }
-                if (i == output.size() - 1) {
-                    delete (temp);
-                }
-            }
-
-        }*/
+        State<T> goal = searchable.getGoalState();
+        vector<State<T>> b = backTrace(goal);
+        return b;
+    }
 
 
+    State<T> popFromOpen(multiset<State<T> , CostComparator<T>> &open) {
+        this->evaluatedNodes++;
+
+        State<T> x = *(open.begin());
+        open.erase(x);
+        return x;
+    }
 
 
-    };
+    double costBetweenNodes(State<T> start, State<T> end) const {
+        return start.getCost() + end.getOriginalCost();
+    }
+};
 
+#endif //EX4_BESTFIRSTSEARCH_H
 
-
-#endif //UNTITLED_BESTFS_H
