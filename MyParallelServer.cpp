@@ -12,6 +12,14 @@
 
 
 
+void *MyParallelServer::activeClientHandler( void *arg) {
+    clientData* data = (clientData*)arg;
+    data->client->handlerClient(data->socket,data->socket);
+    delete(data);
+    return nullptr;
+
+}
+
 
 void  MyParallelServer :: open(int port,ClientHandler* c){
 
@@ -53,6 +61,9 @@ void  MyParallelServer :: open(int port,ClientHandler* c){
                 continue;
             }
             else{
+
+                close(socketfd);
+
                 throw invalid_argument("error reading from client");
             }
 
@@ -61,7 +72,9 @@ void  MyParallelServer :: open(int port,ClientHandler* c){
         }
         else {
 
-           pthread_t singleThread;
+
+
+
 
 
            clientData* clientData1;
@@ -69,6 +82,8 @@ void  MyParallelServer :: open(int port,ClientHandler* c){
            clientData1->client = c;
            clientData1->socket = client_socket;
 
+
+            pthread_t singleThread;
 
            pthread_create(&singleThread,nullptr,activeClientHandler,clientData1);
            threadVector.push_back(singleThread);
@@ -89,12 +104,6 @@ void  MyParallelServer :: open(int port,ClientHandler* c){
         pthread_join(threadVector[i], nullptr);
     }
 
-
-}
-
-void* MyParallelServer::activeClientHandler( void* clientData1) {
-    clientData* data = (clientData*)clientData1;
-    data->client->handlerClient(data->socket,data->socket);
 
 }
 

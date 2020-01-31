@@ -17,7 +17,7 @@
 #include "vector"
 #include "DFS.h"
 #include "BFS.h"
-#include "BestFS.h"
+
 #include "AStar.h"
 
 
@@ -77,17 +77,18 @@ public:
                 colsCounter++;
             }
         }
-        //the last without ","
-        colsCounter++;
+
         return colsCounter;
     }
 
     Node createNode(string str){
-        if(str[0] == '(')
+
+      /**  if(str[0] == '(')
             str.erase(str.begin());
         if(str[str.size() - 1] ==  ')'){
             str.pop_back();
-        }
+        }**/
+
         int i = 0;
         string x = "";
         string y = "";
@@ -127,15 +128,11 @@ public:
 
             }
         }
-        lines.push_back(tempLine);
 
 
         char tempX = ' ';
 
-        //check if back == "end" !!
-        // if(lines.back() == "end"){
-        //pop "end"
-        lines.pop_back();
+
         /////
         int i =0;
         endd = lines.back(); // (36,36)
@@ -195,6 +192,7 @@ public:
                 while (stringVector.front()[n] != ','){
                     value = value + stringVector.front()[n];
                     n++;
+
                 }
                 cost = stoi(value);
                 Node node(j, i);

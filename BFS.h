@@ -1,6 +1,4 @@
-//
-// Created by sahar on 22/01/2020.
-//
+
 
 #ifndef UNTITLED_BFS_H
 #define UNTITLED_BFS_H

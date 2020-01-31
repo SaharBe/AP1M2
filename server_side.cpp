@@ -168,24 +168,25 @@ void MyClientHandler::handlerClient(int outputStream, int inputStream) {
     bool end = false;
 
     while (!end) {
+        int valRead = recv(inputStream, buffer, sizeof(buffer), 0);
 
-        int valRead = recv(inputStream, buffer, 1024, 0);
         if (valRead == -1) {
             cout << "error in reading" << endl;
             return;
         }
         for (i = 0; i < valRead; i++) {
-            c = problem[i];
+
+            if (!(line.compare("end"))){
+                end = true;
+                break;
+            }
+            c = buffer[i];
             if (c == '\n') {
-                problem += line + "\n";
+                problem += line + ",\n";
                 line="";
                 continue;
             }
 
-            if (!line.compare("end")) {
-                end = true;
-                break;
-            }
             line += c;
             continue;
         }

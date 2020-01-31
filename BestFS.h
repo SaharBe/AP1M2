@@ -1,4 +1,5 @@
 
+
 #ifndef EX4_BESTFIRSTSEARCH_H
 #define EX4_BESTFIRSTSEARCH_H
 
@@ -96,3 +97,4 @@ public:
 };
 
 #endif //EX4_BESTFIRSTSEARCH_H
+
