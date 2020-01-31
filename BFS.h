@@ -21,8 +21,8 @@ template <class T>
 class BFS: public Searcher<T> {
 
     vector<State<T>> search (const Searchable<T>& searchable){
-        map<State<T>*, bool> visited;
-        map<State<T>*, State<T>*> parents;
+        map<State<T>, bool> visited;
+        map<State<T>, State<T>> parents;
         queue<State<T>> stateQueue;
         vector<State<T>> solutionStateList;
 
@@ -31,33 +31,40 @@ class BFS: public Searcher<T> {
         while(!stateQueue.empty()) {
             State<T> curState = stateQueue.front();
             stateQueue.pop();
-            visited[&curState] = true; /// yakir
+            visited[curState] = true; /// yakir
 
-            if ( !(curState == searchable.getGoalState()) ) {
+            if ( curState != searchable.getGoalState()) {
                 vector<State<T>> possibleStates = searchable.getAllPossibleStates(curState);
 
 
                 for (int i = 0; i < possibleStates.size(); i++) {
                     State<T> stateFromList = possibleStates[i];
-                    if (visited.count(&stateFromList) == 0) {
+                    if (visited.count(stateFromList) == 0) {
 
                         stateQueue.push(stateFromList); /// yakir
-                        parents[&stateFromList] = &curState;
+                        parents[stateFromList] = curState;
                     }
                 }
             } else {
-                while (parents.count(&curState) != 0) {
+                State<T>& stateToAdd = curState;
 
-                    typename std::vector<State<T>>::iterator it; /// yakir
-                    it = solutionStateList.begin();
-                    it = solutionStateList.insert ( it , curState );
+                while (parents.count(stateToAdd) != 0) {
+                    solutionStateList.insert(solutionStateList.begin(), stateToAdd);
+                    stateToAdd = parents[stateToAdd];
 
-                    State<T>* tmp =  parents.at(&curState); /// yakir
-                    curState = *tmp; /// yakir
+//                    typename std::vector<State<T>>::iterator it; /// yakir
+//                    it = solutionStateList.begin();
+//                    it = solutionStateList.insert ( it , curState );
+//
+//                    State<T>* tmp =  parents.at(&curState); /// yakir
+//                    curState = *tmp; /// yakir
                 }
-                typename std::vector<State<T>>::iterator it;
-                it = solutionStateList.begin();
-                it = solutionStateList.insert ( it , curState );
+
+                solutionStateList.insert(solutionStateList.begin(), stateToAdd);
+//                typename std::vector<State<T>>::iterator it;
+//                it = solutionStateList.begin();
+//                it = solutionStateList.insert ( it , curState );
+
                 break;
             }
         }

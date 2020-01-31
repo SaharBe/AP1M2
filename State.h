@@ -24,7 +24,7 @@ private:
 
 public:
 
-    State<T>(T state, double cost){
+    State<T>(T state, double cost, State<T>* cameFrom = NULL){
         this->state = state;
         this->cost = cost;
         this->cameFrom = cameFrom;
@@ -38,14 +38,29 @@ public:
     State() {
 
     }
+    void setCameFrom(State<T> s = NULL) {
+        this->cameFrom = &s;
+    }
+
+    State<T>* getCameFrom() {
+        this->cameFrom;
+    }
+    void setCost(double doub) {
+        cost = doub;
+    }
 
 
-    bool operator==(State other)
+    bool operator==(State other) const
     {
         return state == other.state;
     }
 
-    bool operator<(const State<T>& other){
+    bool operator!=(State other) const
+    {
+        return state != other.state;
+    }
+
+    bool operator<(const State<T>& other) const{
         return other.cost < this->cost;
     }
 
@@ -55,6 +70,12 @@ public:
     }
     T getState() const{
         return state;
+    }
+    double getOriginalCost() const {
+        if (cameFrom == nullptr) {
+            return cost;
+        }
+        return cost -cameFrom->getCost();
     }
 
 

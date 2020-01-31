@@ -19,8 +19,8 @@ int main(int numArg, char *args[]) {
 
   //  BFS<Node>* searcher;
 
-  MatrixSolver matrixSolver(new BFS<Node> );
-   string str = "1,2,3\n4,5,6\n7,8,9\n(0,0)\n(2,2)\nend";
+ MatrixSolver matrixSolver(new BestFS<Node> );
+   string str = "1,2,-1\n4,5,6\n7,8,9\n(0,0)\n(2,2)\nend";
    matrixSolver.solve(str);
 
    /*  server.open(port, new MyClientHandler(new MatrixSolver(searcher), new FileCacheManager));

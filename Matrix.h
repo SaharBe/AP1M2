@@ -74,19 +74,19 @@ public:
         int currCol = state.getState().getCol();
 
         // Up neighbor
-        if (currRow > 0  ) {
+        if (currRow > 0  && mat[currRow -1][currCol].getCost() != -1) {
             vec.emplace_back(mat[currRow -1][currCol]);
         }
         // Down neighbor
-        if (currRow < rows-1) {
+        if (currRow < rows-1 && mat[currRow +1][currCol].getCost() != -1) {
             vec.emplace_back(mat[currRow +1][currCol]);
         }
         // Left neighbor
-        if (currCol > 0) {
+        if (currCol > 0 && mat[currRow ][currCol -1].getCost() != -1)   {
             vec.emplace_back(mat[currRow ][currCol -1]);
         }
         // Right neighbor
-        if (currCol < cols-1) {
+        if (currCol < cols-1 && mat[currRow ][currCol +1].getCost() != -1) {
             vec.emplace_back(mat[currRow][currCol +1]);
         }
         return vec;

@@ -26,18 +26,20 @@ public:
     Node(){
 
     }
-    string get(int x,int y);
+  //  string get(int x,int y)
 
     Node upNode();
     Node downNode();
     Node rightNode();
     Node leftNode();
-    bool operator==(Node other)
+    bool operator==(Node other) const
     {
-        if(this->x == other.x && this->y == other.y){
-            return true;
-        }
-        return false;
+        return this->x == other.x && this->y == other.y;
+    }
+
+    bool operator!=(Node other) const
+    {
+        return !(*this == other);
     }
 
     int getRow();
