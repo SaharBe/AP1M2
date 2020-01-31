@@ -1,3 +1,5 @@
+problem-solver server template
+
 The code in this project build a server that waits for clients,reads problems from them,solves the problem and returns the answer.
 the sturcture of the code is built in a way that allow you to change between different implemitions, and even enables you to make your own.
 to make this possible,each part of the code handles different functions in a certain area.we implemented them in the generic way based on the SOLID fundamentals.
@@ -17,6 +19,7 @@ based on what the client sends,it can end the communication or,based on two basi
 'solver'-a class that gets a problem from a client handler and active some type of a problem solver algorithm,and than returns the solution to the client handler. 
 
 in this project,in addition of adding this generic structure for making a problem-solver server more easier - we implemented two types of solvers. the first one is a solver that get a string and returns the reverse of it. the second solver is called a matrix solver,and it gets a matrix,a start point and an end point- and returns the shortest path from the start to the end. 
+
 In our implemention we wanted to keep the type of matrix solver generic too,for cases we want to use muilti algorithms to solve a problem. we recommend to follow this structure. in this case we implemented it with a generic search and searchables templates.
 
 
@@ -27,11 +30,13 @@ New Server(int port,new clientHandler(new cacheManager,new solver))
 as you can see,the builder of server gets a port and a client handler, and the builder of a client handler gets a change manager and a solver.
 
 as a last step,write server->open to open a server and start listening to any client that connects to it. the code from this point can be activeted and handle itself-it will get problems,solve them and save them in the cache manager.
+We recommend to try and run the example solvers we built to expereince how your own classes should run.
 
 -Project made by Sahar Ben-Yitzhak and Eyal Brilling.
 github profiles:
 
 https://github.com/SaharBe
+
 https://github.com/EyalBrilling
 
 
