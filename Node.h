@@ -7,6 +7,7 @@
 
 #include <string>
 #include <iostream>
+#include "State.h"
 
 using namespace std;
 
@@ -22,12 +23,24 @@ public:
         this->y = y;
 
     }
-    string get(int x,int y);
+    Node(){
+
+    }
+  //  string get(int x,int y)
 
     Node upNode();
     Node downNode();
     Node rightNode();
     Node leftNode();
+    bool operator==(Node other) const
+    {
+        return this->x == other.x && this->y == other.y;
+    }
+
+    bool operator!=(Node other) const
+    {
+        return !(*this == other);
+    }
 
     int getRow();
     int getCol();

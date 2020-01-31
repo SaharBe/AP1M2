@@ -1,27 +1,25 @@
-
-
 #include "CacheManager.h"
 
 
 
 string FileCacheManager::returnSolution(string problem) {
-  string solution;
-  //if a solution is already in the cache
-  if(DoesSolutionExistsInHashMap(problem)){
-    solution = ReturnSolutionFromHashMap(problem);
-    UpdateCacheMap(problem,solution);
-    return solution;
-  }
-  //if solution is in file
-  else if (DoesSolutionExistsInFiles(problem)){
-      solution=ReturnSolutionFromFiles(problem);
-      UpdateCacheMap(problem,solution);
-      return solution;
-  }
+    string solution;
+    //if a solution is already in the cache
+    if(DoesSolutionExistsInHashMap(problem)){
+        solution = ReturnSolutionFromHashMap(problem);
+        UpdateCacheMap(problem,solution);
+        return solution;
+    }
+        //if solution is in file
+    else if (DoesSolutionExistsInFiles(problem)){
+        solution=ReturnSolutionFromFiles(problem);
+        UpdateCacheMap(problem,solution);
+        return solution;
+    }
 
-  else {
-      throw invalid_argument("entered to returnSolution even though solution in not in files and not in hashMap");
-  }
+    else {
+        throw invalid_argument("entered to returnSolution even though solution in not in files and not in hashMap");
+    }
 
 }
 
@@ -29,10 +27,10 @@ string FileCacheManager::returnSolution(string problem) {
 
 //returns T\F based on if the problem-string is in the solutionMap
 bool FileCacheManager::DoesSolutionExistsInHashMap(string problem)  {
-  if(solutionHashMap.find(problem) == solutionHashMap.end()) {
-    return false;
-  }
-  else{return true;}
+    if(solutionHashMap.find(problem) == solutionHashMap.end()) {
+        return false;
+    }
+    else{return true;}
 }
 
 string FileCacheManager::ReturnSolutionFromHashMap(string problem) {
@@ -47,7 +45,7 @@ string FileCacheManager::ReturnSolutionFromHashMap(string problem) {
 }
 
 void FileCacheManager::SaveSolutionInHashMap(string problem, string solution) {
-  solutionHashMap[problem] = solution;
+    solutionHashMap[problem] = solution;
 }
 
 void FileCacheManager::UpdateCacheMap(string problem, string solution) {
@@ -62,14 +60,14 @@ void FileCacheManager::UpdateCacheMap(string problem, string solution) {
         hashMapVector.insert(hashMapVector.begin(), problem);
         solutionHashMap[problem] = solution;
     }
-    //if hashMap is not full,update just the hashMap and its vector
+        //if hashMap is not full,update just the hashMap and its vector
     else {
         //if the problem is not in the map,update map and vector
         if(find(hashMapVector.begin(),hashMapVector.end(),problem) == hashMapVector.end() ) {
             hashMapVector.insert(hashMapVector.begin(), problem);
             solutionHashMap[problem] = solution;
         }
-        //if the problem is already in the map,update only the vector.
+            //if the problem is already in the map,update only the vector.
         else{
             hashMapVector.insert(hashMapVector.begin(), problem);
         }
@@ -131,7 +129,4 @@ void FileCacheManager::SaveSolution(string problem, string solution) {
     SaveSolutionInFiles(problem,solution);
     SaveSolutionInHashMap(problem,solution);
 }
-
-
-
 

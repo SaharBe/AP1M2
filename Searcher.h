@@ -16,13 +16,13 @@
 
 using namespace std;
 
-template <class T, class S>
+template <class T>
 class Searcher{
 
 protected:
 
-    virtual vector<State<T>*> MyPriorityQueue(State<T> *node) ;
-    virtual vector<State<T>*> backTrace(State<T> *node);
+
+  //  virtual vector<State<T>*> MyPriorityQueue(State<T> *node) ;
     int evaluatedNodes;
 
 
@@ -45,7 +45,6 @@ public:
      }
 
 
-   template<T>
    vector<State<T>*> backTrace(State<T> *s) {
         vector<State<T> *> backTracevector;
         State<T>* state = s;

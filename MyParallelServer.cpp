@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <thread>
+#include <pthread.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <unistd.h>
@@ -10,8 +11,16 @@
 #include <sys/time.h>
 
 
+void *MyParallelServer::activeClientHandler( void *arg) {
+    clientData* data = (clientData*)arg;
+    data->client->handlerClient(data->socket,data->socket);
+    delete(data);
+    return nullptr;
 
-void  MyParallelServer :: open(int port,ClientHandler& c){
+}
+
+void  MyParallelServer :: open(int port,ClientHandler* c){
+
 
     int socketfd = socket(AF_INET,SOCK_STREAM,0);
     if(socketfd == -1){
@@ -29,22 +38,20 @@ void  MyParallelServer :: open(int port,ClientHandler& c){
         std:: cerr << "Could not bind the socket to an IP\n" << std:: endl;
         return;
     }
-    if(listen(socketfd, 1) == -1){
+    if(listen(socketfd, SOMAXCONN) == -1){
         cerr << "Error during listening command\n" << std:: endl;
     }
 
 
 
-    std:: vector<std::thread> threadVector;
+
+    vector<pthread_t> threadVector;
     while(continueFlag) {
-        timeval tv;
-        tv.tv_sec = 30;
-        tv.tv_usec = 0;
-        setsockopt(socketfd, SOL_SOCKET, SO_RCVTIMEO, (const char*)&tv, sizeof tv);
+
         int client_socket = accept(socketfd, (struct sockaddr *) &address, (socklen_t *) &address);
 
 
-        if (client_socket = -1){
+        if (client_socket == -1){
             if(!continueFlag){
                 break;
             }
@@ -52,6 +59,7 @@ void  MyParallelServer :: open(int port,ClientHandler& c){
                 continue;
             }
             else{
+                close(socketfd);
                 throw invalid_argument("error reading from client");
             }
 
@@ -59,24 +67,42 @@ void  MyParallelServer :: open(int port,ClientHandler& c){
 
         }
         else {
-            std::thread t(&ClientHandler::handlerClient, &c, client_socket, client_socket);
-            threadVector.emplace_back(move(t));
-            t.detach();
+
+
+
+
+           clientData* clientData1;
+           clientData1 = new clientData();
+           clientData1->client = c;
+           clientData1->socket = client_socket;
+
+            pthread_t singleThread;
+           pthread_create(&singleThread,nullptr,activeClientHandler,clientData1);
+           threadVector.push_back(singleThread);
+            timeval timeout;
+            timeout.tv_sec = 1;
+            timeout.tv_usec = 0;
+            setsockopt(port, SOL_SOCKET, SO_RCVTIMEO, (char *) &timeout, sizeof(timeout));
+
+
+
         }
 
 
 
     }
-    for(auto&thread : threadVector){
-        thread.join();
+
+    for (int i = 0; i < threadVector.size(); i++) {
+        pthread_join(threadVector[i], nullptr);
     }
 
 
 }
 
 
-
 bool MyParallelServer::stop(int socket) {
+
     continueFlag = false;
+    close(socket);
     return continueFlag;
 }

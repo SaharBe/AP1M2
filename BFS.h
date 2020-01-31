@@ -1,6 +1,4 @@
-//
-// Created by sahar on 22/01/2020.
-//
+
 
 #ifndef UNTITLED_BFS_H
 #define UNTITLED_BFS_H
@@ -17,37 +15,54 @@
 
 using namespace std;
 
-template <class T, class S>
-class BFS: public Searcher<T, S> {
+template <class T>
+class BFS: public Searcher<T> {
+
     vector<State<T>> search (const Searchable<T>& searchable){
-        map<State<T>*, bool> visited;
-        map<State<T>*, State<T>*> parents;
-        queue<State<T>*> stateQueue;
+        map<State<T>, bool> visited;
+        map<State<T>, State<T>> parents;
+        queue<State<T>> stateQueue;
         vector<State<T>> solutionStateList;
 
-        stateQueue.push(&searchable.getInitialState());
+        stateQueue.push(searchable.getInitialState());
 
         while(!stateQueue.empty()) {
-            State<T> *curState = stateQueue.front();
+            State<T> curState = stateQueue.front();
             stateQueue.pop();
-            visited[curState] = true;
+            visited[curState] = true; /// yakir
 
-            if (*curState != searchable.getGoalState()) {
-                vector<State<T>> possibleStates = searchable.getAllPossibleStates(*curState);
+            if ( curState != searchable.getGoalState()) {
+                vector<State<T>> possibleStates = searchable.getAllPossibleStates(curState);
+
 
                 for (int i = 0; i < possibleStates.size(); i++) {
-                    if (visited.count(&possibleStates[i]) == 0) {
-                        stateQueue.push(&possibleStates[i]);
-                        parents[&possibleStates[i]] = curState;
+                    State<T> stateFromList = possibleStates[i];
+                    if (visited.count(stateFromList) == 0) {
+
+                        stateQueue.push(stateFromList); /// yakir
+                        parents[stateFromList] = curState;
                     }
                 }
             } else {
-                while (parents.count(curState) != 0) {
-                    solutionStateList.insert(solutionStateList.begin(), *curState);
-                    curState = parents[curState];
+                State<T>& stateToAdd = curState;
+
+                while (parents.count(stateToAdd) != 0) {
+                    solutionStateList.insert(solutionStateList.begin(), stateToAdd);
+                    stateToAdd = parents[stateToAdd];
+
+//                    typename std::vector<State<T>>::iterator it; /// yakir
+//                    it = solutionStateList.begin();
+//                    it = solutionStateList.insert ( it , curState );
+//
+//                    State<T>* tmp =  parents.at(&curState); /// yakir
+//                    curState = *tmp; /// yakir
                 }
 
-                solutionStateList.insert(solutionStateList.begin(), *curState); // insert inital state
+                solutionStateList.insert(solutionStateList.begin(), stateToAdd);
+//                typename std::vector<State<T>>::iterator it;
+//                it = solutionStateList.begin();
+//                it = solutionStateList.insert ( it , curState );
+
                 break;
             }
         }

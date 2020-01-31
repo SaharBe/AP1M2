@@ -14,8 +14,6 @@ using namespace std;
 //using namespace server_side;
 
 
-
-
 void  MySerialServer :: open(int port,ClientHandler* c){
 
     int socketfd = socket(AF_INET,SOCK_STREAM,0);
@@ -80,6 +78,7 @@ void  MySerialServer :: open(int port,ClientHandler* c){
 
 bool MySerialServer::stop(int socket) {
     continueFlag = false;
+    close(socket);
     return continueFlag;
 }
 
@@ -130,7 +129,7 @@ void MyTestClientHandler::handlerClient(int outputStream, int inputStream) {
         else {
 
 
-               WriteAnswerToClient(outputStream, stringQuestion );
+            WriteAnswerToClient(outputStream, stringQuestion );
 
 
         }
@@ -145,7 +144,7 @@ void MyTestClientHandler::handlerClient(int outputStream, int inputStream) {
 void MyTestClientHandler::WriteAnswerToClient(int outPutStream,string question) {
     string answer;
     if(cacheManager->DoesSolutionExist(question)) {
-          answer = cacheManager->returnSolution(question);
+        answer = cacheManager->returnSolution(question);
     }
     else{
 
@@ -162,7 +161,7 @@ void MyTestClientHandler::WriteAnswerToClient(int outPutStream,string question) 
 
 void MyClientHandler::handlerClient(int outputStream, int inputStream) {
     string line = "";
-    string problem;
+    string problem = "";
     char buffer[1024];
     char c;
     int i;
@@ -170,22 +169,21 @@ void MyClientHandler::handlerClient(int outputStream, int inputStream) {
 
     while (!end) {
 
-        int valRead = recv(inputStream, buffer, 1024, 0);
+        int valRead = recv(inputStream, buffer, sizeof(buffer), 0);
         if (valRead == -1) {
             cout << "error in reading" << endl;
             return;
         }
         for (i = 0; i < valRead; i++) {
-            c = problem[i];
-            if (c == '\n') {
-                problem += line + "\n";
-                line="";
-                continue;
-            }
-
-            if (!line.compare("end")) {
+            if (!(line.compare("end"))){
                 end = true;
                 break;
+            }
+            c = buffer[i];
+            if (c == '\n') {
+                problem += line + ",\n";
+                line="";
+                continue;
             }
             line += c;
             continue;
@@ -204,24 +202,22 @@ void MyClientHandler::handlerClient(int outputStream, int inputStream) {
         throw "error in writing to client";
     }
 }
-
+namespace boot{
 //int boot::Main::
 int main(int argc, char *args[]) {
     double port = stod(args[1]);
 
-    Server* server = new MySerialServer();
-  //  StringRevers stringRevers;
+    Server *server = new MySerialServer();
+    //  StringRevers stringRevers;
     //FileCacheManager fc;
 
 
-    server->open(port, new MyTestClientHandler(new StringRevers,new FileCacheManager));
+    server->open(port, new MyTestClientHandler(new StringRevers, new FileCacheManager));
 
-;
 
     server->stop(port);
     delete (server);
     return 0;
 
-
 }
-
+}

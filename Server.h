@@ -6,7 +6,7 @@
 #define UNTITLED_SERVER_H
 
 
-
+#include "server_side.h"
 
 namespace server_side {
 
