@@ -23,24 +23,24 @@
 
 class MatrixSolver: public Solver< string, string>{
 
-     int rows;
-     int cols;
-     string endd;
-     string startt;
-     Node start;
-     Node end;
-     State<Node> initi;
-     State<Node> goal;
+    int rows;
+    int cols;
+    string endd;
+    string startt;
+    Node start;
+    Node end;
+    State<Node> initi;
+    State<Node> goal;
 
 public:
     ///
 
-  //  make the matrix from the string
+    //  make the matrix from the string
     ///
-  // Searcher<Matrix<Node>>* searcher = new BestFS ;
+    // Searcher<Matrix<Node>>* searcher = new BestFS ;
 
-  Searcher<Node>* searcher;
-  string problem;
+    Searcher<Node>* searcher;
+    string problem;
 
 
     ///ctor
@@ -138,15 +138,15 @@ public:
         lines.pop_back();
         /////
         int i =0;
-         endd = lines.back(); // (36,36)
-         end = createNode(endd);
+        endd = lines.back(); // (36,36)
+        end = createNode(endd);
 
         lines.pop_back();
-         startt = lines.back();
-         start = createNode(startt);
+        startt = lines.back();
+        start = createNode(startt);
         lines.pop_back();
-    //    State<Node> start0(start, );
-    //    State<Node> end0 = end;
+        //    State<Node> start0(start, );
+        //    State<Node> end0 = end;
 
         ////
 
@@ -154,7 +154,7 @@ public:
         rows = lines.size() ;
         string random = lines.front();
         cols = numofMatrixCols(random);
-       // Matrix<State<Node>> matrix = new Matrix<Node>(cols,  rows,start0,  end0);
+        // Matrix<State<Node>> matrix = new Matrix<Node>(cols,  rows,start0,  end0);
 
         //return matrix;
 
@@ -197,10 +197,10 @@ public:
                     n++;
                 }
                 cost = stoi(value);
-                Node node(i, j);
+                Node node(j, i);
                 if(node == start){
-                   initi=State<Node>(node, cost);
-                   line.push_back(initi);
+                    initi=State<Node>(node, cost);
+                    line.push_back(initi);
                 }else if(node == end){
                     goal=State<Node>(node, cost);
                     line.push_back(goal);
@@ -212,7 +212,7 @@ public:
                 value = "";
                 n++;
 
-              //  line.push_back(state);
+                //  line.push_back(state);
 
             }
             matrix.push_back(line);
@@ -227,13 +227,13 @@ public:
 
 
 
-     virtual string solve(string problem){
+    virtual string solve(string problem){
 
         createMatrix(problem);
         vector<string> vec = createVectorOfstrings(problem,rows);
         vector<vector<State<Node>>> mat = makeStringsTONodes(vec);
-      //  Matrix matrix(cols, rows,initi, goal, mat);
-         Matrix* matrix= new Matrix(cols, rows,initi, goal, mat);
+        //  Matrix matrix(cols, rows,initi, goal, mat);
+        Matrix* matrix= new Matrix(cols, rows,initi, goal, mat);
 
 
         vector<State<Node>> ans = searcher->search(*matrix);
@@ -267,10 +267,10 @@ public:
 
 
             if(a.operator==(b)){
-               temp = solution;
-               solution =  ",Down (" + to_string(costAll) + ")" +temp;
+                temp = solution;
+                solution =  ",Down (" + to_string(costAll) + ")" +temp;
 
-               costAll = costAll - first.getCost();
+                costAll = costAll - first.getCost();
             }
             else if(a.operator==(c)){
                 temp = solution;

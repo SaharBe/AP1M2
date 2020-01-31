@@ -31,24 +31,33 @@ class BFS: public Searcher<T> {
         while(!stateQueue.empty()) {
             State<T> curState = stateQueue.front();
             stateQueue.pop();
-            visited[curState] = true;
+            visited[&curState] = true; /// yakir
 
-            if (*curState != searchable.getGoalState()) {
-                vector<State<T>> possibleStates = searchable.getAllPossibleStates(*curState);
+            if ( !(curState == searchable.getGoalState()) ) {
+                vector<State<T>> possibleStates = searchable.getAllPossibleStates(curState);
+
 
                 for (int i = 0; i < possibleStates.size(); i++) {
-                    if (visited.count(&possibleStates[i]) == 0) {
-                        stateQueue.push(&possibleStates[i]);
-                        parents[&possibleStates[i]] = curState;
+                    State<T> stateFromList = possibleStates[i];
+                    if (visited.count(&stateFromList) == 0) {
+
+                        stateQueue.push(stateFromList); /// yakir
+                        parents[&stateFromList] = &curState;
                     }
                 }
             } else {
-                while (parents.count(curState) != 0) {
-                    solutionStateList.insert(solutionStateList.begin(), *curState);
-                    curState = parents[curState];
-                }
+                while (parents.count(&curState) != 0) {
 
-                solutionStateList.insert(solutionStateList.begin(), *curState); // insert inital state
+                    typename std::vector<State<T>>::iterator it; /// yakir
+                    it = solutionStateList.begin();
+                    it = solutionStateList.insert ( it , curState );
+
+                    State<T>* tmp =  parents.at(&curState); /// yakir
+                    curState = *tmp; /// yakir
+                }
+                typename std::vector<State<T>>::iterator it;
+                it = solutionStateList.begin();
+                it = solutionStateList.insert ( it , curState );
                 break;
             }
         }

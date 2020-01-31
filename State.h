@@ -14,15 +14,28 @@ private:
     double cost;
     State<T>* cameFrom;
 
+
+    State *top;
+    State *bottom;
+    State *left;
+    State *right;
+
+
+
 public:
 
     State<T>(T state, double cost){
         this->state = state;
         this->cost = cost;
         this->cameFrom = cameFrom;
+
     }
 
-    State<T>(){
+    State<T>(T state){
+        this->state = state;
+    }
+
+    State() {
 
     }
 
@@ -43,6 +56,21 @@ public:
     T getState() const{
         return state;
     }
+
+
+
+    /* std::vector<State *> ret;
+
+        if (bottom != NULL)
+            ret.push_back(bottom);
+        if (top != NULL)
+            ret.push_back(top);
+        if (left != NULL)
+            ret.push_back(left);
+        if (right != NULL)
+            ret.push_back(right);
+        return ret;*/
+
 };
 
 

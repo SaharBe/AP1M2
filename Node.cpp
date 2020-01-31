@@ -6,12 +6,12 @@
 #include "State.h"
 
 Node Node::upNode() {
-    return Node(this->x -1, this->y);
+    return Node(this->x , this->y -1);
 }
 
 Node Node::downNode() {
 
-    return Node(this->x, this->y -1);
+    return Node(this->x, this->y +1);
 }
 
 Node Node::rightNode() {

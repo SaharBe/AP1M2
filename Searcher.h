@@ -21,7 +21,7 @@ class Searcher{
 
 protected:
 
-    virtual vector<State<T>*> MyPriorityQueue(State<T> *node) ;
+  //  virtual vector<State<T>*> MyPriorityQueue(State<T> *node) ;
     int evaluatedNodes;
 
 

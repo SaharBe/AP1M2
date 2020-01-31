@@ -19,7 +19,7 @@ using namespace std;
 
 
 template <class T>
-class DFSSearcher: public Searcher<T>{
+class DFS: public Searcher<T>{
     public:
         vector<State<T>> search (const Searchable<T>& searchable)
         {

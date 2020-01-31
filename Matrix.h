@@ -9,6 +9,8 @@
 #include <string>
 #include "search.h"
 #include "Node.h"
+#include <vector>
+
 
 using namespace std;
 
@@ -47,7 +49,7 @@ public:
 
 
     vector<State<Node>> getAllPossibleStates(const State<Node>& state) const{
-        std:: vector<State<Node>> result;
+   /*   std:: vector<State<Node>> result;
 
 
         Node curr = state.getState();
@@ -64,10 +66,31 @@ public:
 
             }
         }
-        return result;
+        return result;*/
+
+        vector<State<Node>> vec;
+
+        int currRow = state.getState().getRow();
+        int currCol = state.getState().getCol();
+
+        // Up neighbor
+        if (currRow > 0  ) {
+            vec.emplace_back(mat[currRow -1][currCol]);
+        }
+        // Down neighbor
+        if (currRow < rows-1) {
+            vec.emplace_back(mat[currRow +1][currCol]);
+        }
+        // Left neighbor
+        if (currCol > 0) {
+            vec.emplace_back(mat[currRow ][currCol -1]);
+        }
+        // Right neighbor
+        if (currCol < cols-1) {
+            vec.emplace_back(mat[currRow][currCol +1]);
+        }
+        return vec;
     }
-
-
 
 };
 
