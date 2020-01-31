@@ -11,7 +11,6 @@
 #include <sys/time.h>
 
 
-
 void *MyParallelServer::activeClientHandler( void *arg) {
     clientData* data = (clientData*)arg;
     data->client->handlerClient(data->socket,data->socket);
@@ -19,7 +18,6 @@ void *MyParallelServer::activeClientHandler( void *arg) {
     return nullptr;
 
 }
-
 
 void  MyParallelServer :: open(int port,ClientHandler* c){
 
@@ -61,9 +59,7 @@ void  MyParallelServer :: open(int port,ClientHandler* c){
                 continue;
             }
             else{
-
                 close(socketfd);
-
                 throw invalid_argument("error reading from client");
             }
 
@@ -75,16 +71,12 @@ void  MyParallelServer :: open(int port,ClientHandler* c){
 
 
 
-
-
            clientData* clientData1;
            clientData1 = new clientData();
            clientData1->client = c;
            clientData1->socket = client_socket;
 
-
             pthread_t singleThread;
-
            pthread_create(&singleThread,nullptr,activeClientHandler,clientData1);
            threadVector.push_back(singleThread);
             timeval timeout;
@@ -106,7 +98,6 @@ void  MyParallelServer :: open(int port,ClientHandler* c){
 
 
 }
-
 
 
 bool MyParallelServer::stop(int socket) {

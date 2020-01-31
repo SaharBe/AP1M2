@@ -16,16 +16,12 @@
 
 
 class MyParallelServer:public Server {
-
     static void* activeClientHandler(void* arg);
-
 public:
     vector<thread> threadVector;
     bool continueFlag = true;
     virtual void open(int port,ClientHandler* c);
     virtual  bool stop(int socet);
-
-
 
 
 
