@@ -27,22 +27,25 @@ class BFS: public Searcher<T> {
         vector<State<T>> solutionStateList;
 
         stateQueue.push(searchable.getInitialState());
-        int count = 0;
+
+
         while(!stateQueue.empty()) {
-            count++;
-            cout<< count<< endl;
+          
             State<T> curState = stateQueue.front();
             stateQueue.pop();
-            visited[curState] = true;
+            visited[curState] = true; 
 
             if ( curState != searchable.getGoalState()) {
                 vector<State<T>> possibleStates = searchable.getAllPossibleStates(curState);
+
 
                 for (int i = 0; i < possibleStates.size(); i++) {
                     State<T> stateFromList = possibleStates[i];
                     if (visited.count(stateFromList) == 0) {
 
+
                         stateQueue.push(stateFromList);
+
                         parents[stateFromList] = curState;
                     }
                 }
@@ -58,14 +61,13 @@ class BFS: public Searcher<T> {
                 solutionStateList.insert(solutionStateList.begin(), stateToAdd);
 
 
+
                 break;
             }
         }
 
         return solutionStateList;
     }
-
-
 
 
 };

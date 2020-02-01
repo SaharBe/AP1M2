@@ -1,10 +1,12 @@
 
-
-#include <stdio.h>
 #include <string.h>
 #include <iostream>
 #include <fstream>
 #include <unordered_map>
+#include <vector>
+#include <algorithm>
+#include <stdio.h>
+
 
 using namespace std;
 #ifndef UNTITLED__CACHEMANAGER_H_
@@ -15,45 +17,53 @@ using namespace std;
 //interface for a cacheManager. it gets a problem from a clientHandler and returns solution if its in cache
 template <class Problem,class Solution>
 class CacheManager {
- public:
+public:
     virtual bool DoesSolutionExist(Problem problem) = 0;
-    virtual Solution returnSolution(Problem problem) = 0; //return a solution to client handler
+
+    virtual Solution returnSolution(Problem problem) = 0;
     virtual void SaveSolution(Problem problem, Solution solution) = 0;
-  };
+};
 
 
-  class FileCacheManager: public CacheManager<class Problem,class Solution>{
-   public:
-    std:: unordered_map<Problem*,Solution*> solutionMap;
+class FileCacheManager: public CacheManager<string,string> {
+public:
+    pthread_mutex_t mutex;
+    std::unordered_map<string, string> solutionHashMap;
+    vector<string> hashMapVector;
+    int hashMapMaxSize = 10;
 
+    string removeEOL(string str);
+
+    virtual bool DoesSolutionExist(string problem);
+
+
+    virtual void SaveSolution(string problem,string solution);
+
+    virtual string returnSolution(string problem);
     //returns T/F based on if the solution exists in the map
-    template <class Problem>  bool DoesSolutionExist(Problem& problem) {
-        if(solutionMap.find(problem) == solutionMap.end()) {
-            return false;
-         }
-        else{return true;}
-    }
+    bool DoesSolutionExistsInHashMap(string problem);
 
     //return the solution from the cache
-    template <class Solution,class Problem> Solution returnSolution(Problem& problem) {
-        {
-            Solution solution;
-            //if a solution is already in the cache it returns it
-            solution = solutionMap.find(problem)->second;
-            return solution;
-
-
-        }
-
-    }
+    string ReturnSolutionFromHashMap(string problem);
 
     //saves the problem and solution in the cache
-    template <class Solution,class Problem> void SaveSolution(Problem& problem,Solution& solution){
+    void UpdateCacheMap(string problem, string solution);
 
-            solutionMap.insert(problem,solution);
 
-    }
+    string ReturnSolutionFromFiles(string problem);
+
+
+    bool DoesSolutionExistsInFiles(string problem);
+
+    void SaveSolutionInFiles(string problem, string solution);
+
+    void SaveSolutionInHashMap(string problem, string solution);
+
+
+
+
 };
+
 
 
 
