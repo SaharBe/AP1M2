@@ -1,5 +1,4 @@
 
-
 #ifndef EX4_BESTFIRSTSEARCH_H
 #define EX4_BESTFIRSTSEARCH_H
 
@@ -7,94 +6,133 @@
 #include "Searcher.h"
 #include "CostComparator.h"
 #include "State.h"
+#include <unordered_set>
 
-template<class T>
+#include <vector>
+
+//template <typename T>
+struct CompareCosrr {
+    bool operator()(const State<Node> & c1, const State<Node> & c2) {
+        return c1.getCost() > c2.getCost();
+    }
+};
+
+template <class T>
 class BestFS : public Searcher<T> {
 
 public:
-    vector<State<T>> backTrace(State<T> s) {
-        vector<State<T> > backTracevector;
-        State<T>* state = &s;
-        ///enter all the back Trace to the vector
-        while (state->getCameFrom() != nullptr) {
-            backTracevector.insert(backTracevector.begin(), s);
-            state = state->getCameFrom();
+
+
+
+  vector<State<Node>> backTrace(State<Node> s, map<State<T>, State<T>>& cameFrom) {
+
+          vector<State<Node> > backTracevector;
+          State<Node>& state = s;
+          ///enter all the back Trace to the vector
+          while (cameFrom[state] != state) {
+              backTracevector.insert(backTracevector.begin(), state);
+              state = cameFrom[state];
+          }
+          //return all back trace
+          backTracevector.insert(backTracevector.begin(), state);
+          return backTracevector;
+  }
+
+   // template <T>
+    bool findInOpen(const priority_queue<State<Node>, vector<State<Node>>, CompareCosrr>& que, State<Node> state){
+        priority_queue<State<Node>, vector<State<Node>>, CompareCosrr> temp = que;
+        while(!temp.empty()) {
+            if (state != temp.top()) {
+                temp.pop();
+            } else {
+                return true;
+            }
         }
-        ///
-        if (backTracevector.empty()) {
-            return backTracevector;
-        }
-        //return all back trace
-        backTracevector.insert(backTracevector.begin(), s);
-        return backTracevector;
+        return false;
+   }
+    double costBetweenNodes(State<Node> start, State<Node> end) {
+        return start.getCost() + end.getOriginalCost();
     }
 
-    virtual vector<State<T>> search(const Searchable<T>& searchable) {
-        multiset<State<T> , CostComparator<T>> open;
-        set<State<T>> closed;
+    void erase( priority_queue<State<Node>, vector<State<Node>>, CompareCosrr> &que, State<Node> state){
+        priority_queue<State<Node>, vector<State<Node>>, CompareCosrr> newQ ;
 
-        State<T> curr = searchable.getInitialState();
-        open.insert(curr);
+        while(que.top() != state){
+            newQ.push(que.top());
+            que.pop();
+        }
+        que.pop();
+        while(!que.empty()){
+            newQ.push(que.top());
+            que.pop();
+        }
+        que = newQ;
+    }
+
+
+
+
+
+
+    virtual vector<State<Node>> search (const Searchable<Node>& searchable)  {
+        priority_queue<State<Node>, vector<State<Node>>, CompareCosrr> open; //
+        map<State<T>, State<T>> cameFrom;
+        open.push(searchable.getInitialState());
+        set <State<Node>> closed;
+
+        cameFrom[searchable.getInitialState()] = searchable.getInitialState();
 
         while (!open.empty()) {
-            curr = popFromOpen(open);
-            closed.insert(curr);
-            if (curr == searchable.getGoalState()) {
-                break;
+            State<Node> n = open.top();
+            closed.insert(n);
+            open.pop();
+            if (n == searchable.getGoalState()) {
+                return backTrace(n, cameFrom);; //backTrace(searchable.getGoalState());
+              cout << n.getCost()<< endl;
             }
+            vector<State<Node>> successor = searchable.getAllPossibleStates(n);
+            for (State<Node> succ : successor) {
+                if (closed.find(succ) == closed.end() && !findInOpen(open, succ)) {
+                //    succ.setCameFrom(n);
+                    cameFrom[succ] = n;
+                    open.push(succ);
 
-            vector<State<T>> successors = searchable.getAllPossibleStates(curr);
-            for (State<T> succ : successors) {
-                // Ignoring walls
-                if (succ.getCost() < 0) {
-                    continue;
-                }
-                if (closed.find(succ) != closed.end()) {
-                    continue;
-                }
-                // If 'succ' isn't in any of the lists - update it and add to 'open'
-                if (open.find(succ) == open.end()) {
-                    succ.setCameFrom(curr);
-                    succ.setCost(succ.getCost() + curr.getCost());
-                    open.insert(succ);
-                    continue;
-                }
-                // If there is a better path - update cost
-                double cost = costBetweenNodes(curr, succ);
-                if (cost < succ.getCost()) {
-                    succ.setCost(cost);
+                }else {
+                    double cost = costBetweenNodes(n, succ);
+                    if (cost < succ.getCost()) {// If there is a better path - update cost;
 
-                    // If it's a new path
-                    if (succ.getCameFrom() != &curr) {
-                        succ.setCameFrom(curr);
-                        // It's the same path as before - remove the node and insert back to update priority
-                    } else {
-                        open.erase(succ);
-                        open.insert(succ);
+                        // If it's a new path
+                        //State<Node> *t = succ.getCameFrom();
+                        State<Node> t = cameFrom[succ];
+                     //   if (*t != n) {
+                        if(t != n) {
+                        //    succ.setCameFrom(n);
+                            cameFrom[succ] = n;
+                            // It's the same path as before - remove the node and insert back to update priority
+                        } else {
+                            erase(open, succ);
+                            closed.insert(succ);
+                        }
                     }
                 }
+
             }
+
         }
+   }
 
-        State<T> goal = searchable.getGoalState();
-        vector<State<T>> b = backTrace(goal);
-        return b;
-    }
+/***/
+};
 
 
-    State<T> popFromOpen(multiset<State<T> , CostComparator<T>> &open) {
+#endif//EX4_BESTFS_H
+
+    /*State<T> popFromOpen(multiset<State<T> , CostComparator<T>> &open) {
         this->evaluatedNodes++;
 
         State<T> x = *(open.begin());
         open.erase(x);
         return x;
-    }
+    }*/
 
-
-    double costBetweenNodes(State<T> start, State<T> end) const {
-        return start.getCost() + end.getOriginalCost();
-    }
-};
-
-#endif //EX4_BESTFIRSTSEARCH_H
 

@@ -49,24 +49,7 @@ public:
 
 
     vector<State<Node>> getAllPossibleStates(const State<Node>& state) const{
-   /*   std:: vector<State<Node>> result;
 
-
-        Node curr = state.getState();
-        std::vector<Node> steps = {curr.downNode(), curr.upNode(), curr.rightNode(), curr.leftNode()};
-        for (Node& step : steps) {
-            //up
-           if (step.getRow() < rows && step.getRow() >= 0 && step.getCol() < cols && step.getCol() >= 0) {
-               double cost = mat[curr.getRow()][curr.getCol()].getCost();
-
-               if(cost != -1)
-               {
-                   result.push_back(State<Node>(step, cost));
-               }
-
-            }
-        }
-        return result;*/
 
         vector<State<Node>> vec;
 

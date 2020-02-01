@@ -49,9 +49,9 @@ public:
         vector<State<T> *> backTracevector;
         State<T>* state = s;
         ///enter all the back Trace to the vector
-        while (state->getCameFrom() != nullptr) {
+        while (state->getCameFrom(nullptr) != nullptr) {
             backTracevector.insert(backTracevector.begin(), s);
-            state = state->getCameFrom();
+            state = state->getCameFrom(nullptr);
         }
         ///
         if (backTracevector.empty()) {

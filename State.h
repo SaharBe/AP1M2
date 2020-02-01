@@ -6,19 +6,15 @@
 #define UNTITLED_STATE_H
 
 #include "Node.h"
-
+#include <iostream>
 template <class T>
 class State{
 private:
     T state;
+    double originalCost;
     double cost;
     State<T>* cameFrom;
 
-
-    State *top;
-    State *bottom;
-    State *left;
-    State *right;
 
 
 
@@ -27,6 +23,7 @@ public:
     State<T>(T state, double cost, State<T>* cameFrom = NULL){
         this->state = state;
         this->cost = cost;
+        this->originalCost = cost;
         this->cameFrom = cameFrom;
 
     }
@@ -38,15 +35,22 @@ public:
     State() {
 
     }
-    void setCameFrom(State<T> s = NULL) {
-        this->cameFrom = &s;
+
+    void setCameFrom(State<T>& s) {
+        cameFrom = &s;
     }
 
-    State<T>* getCameFrom() {
-        this->cameFrom;
+   State<T>* getCameFrom() {
+       return cameFrom;
     }
     void setCost(double doub) {
         cost = doub;
+    }
+
+    void operator=(const State& other)
+    {
+        this->state = other.state;
+        this->cost = other.cost;
     }
 
 
@@ -61,36 +65,24 @@ public:
     }
 
     bool operator<(const State<T>& other) const{
-        return other.cost < this->cost;
+        return state < other.state;
     }
 
     double getCost() const
     {
         return cost;
     }
+    void setVisitState(bool visit) {
+        this->is_visitedNode = visit;
+    }
     T getState() const{
         return state;
     }
     double getOriginalCost() const {
-        if (cameFrom == nullptr) {
-            return cost;
-        }
-        return cost -cameFrom->getCost();
+        return originalCost;
     }
 
 
-
-    /* std::vector<State *> ret;
-
-        if (bottom != NULL)
-            ret.push_back(bottom);
-        if (top != NULL)
-            ret.push_back(top);
-        if (left != NULL)
-            ret.push_back(left);
-        if (right != NULL)
-            ret.push_back(right);
-        return ret;*/
 
 };
 
