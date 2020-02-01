@@ -146,6 +146,9 @@ string FileCacheManager::removeEOL(string str){
     str.erase(std::remove(str.begin(), str.end(), '\n'), str.end());
     str.erase(std::remove(str.begin(), str.end(), ','), str.end());
     str.erase(std::remove(str.begin(), str.end(), '-'), str.end());
+    str.erase(std::remove(str.begin(), str.end(), 'e'), str.end());
+    str.erase(std::remove(str.begin(), str.end(), 'n'), str.end());
+    str.erase(std::remove(str.begin(), str.end(), 'd'), str.end());
     if(str.length()>255) {
         str.erase(255, string::npos);
     }

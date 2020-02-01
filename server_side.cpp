@@ -176,12 +176,13 @@ void MyClientHandler::handlerClient(int outputStream, int inputStream) {
         }
         for (i = 0; i < valRead; i++) {
             if (!(line.compare("end"))){
+                problem+="end";
                 end = true;
                 break;
             }
             c = buffer[i];
             if (c == '\n') {
-                problem += line + ",\n";
+                problem += line + "\n";
                 line="";
                 continue;
             }
