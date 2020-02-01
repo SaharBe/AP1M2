@@ -197,10 +197,12 @@ void MyClientHandler::handlerClient(int outputStream, int inputStream) {
         solution = solver->solve(problem);
         cacheManager->SaveSolution(problem,solution);
     }
-    solution+="\n";
-    if(!write(outputStream,solution.c_str(),solution.length()));{
-        throw "error in writing to client";
-    }
+    solution+="\r\n";
+    write(outputStream,solution.c_str(),solution.length());
+    int length = solution.length();
+    close(outputStream);
+
+
 }
 namespace boot{
 //int boot::Main::

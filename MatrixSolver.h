@@ -246,14 +246,19 @@ public:
 
 
 
-        int i;
+        while(!ans.empty()){
+            State<Node> first = ans.back();
+            ans.pop_back();
+            State<Node> second = ans.back();
+
+        int numberOfSteps;
         double  tempcost;
 
         while(!ans.empty()){
             State<Node> first = ans.back();
             ans.pop_back();
             State<Node> second = ans.back();
-
+            numberOfSteps++;
 
 
             Node a  = first.getState();

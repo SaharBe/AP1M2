@@ -3,6 +3,7 @@
 
 
 string FileCacheManager::returnSolution(string problem) {
+    problem = removeEOL(problem);
     string solution;
     //if a solution is already in the cache
     if(DoesSolutionExistsInHashMap(problem)){
@@ -27,9 +28,11 @@ string FileCacheManager::returnSolution(string problem) {
 
 //returns T\F based on if the problem-string is in the solutionMap
 bool FileCacheManager::DoesSolutionExistsInHashMap(string problem)  {
+
     if(solutionHashMap.find(problem) == solutionHashMap.end()) {
         return false;
     }
+
     else{return true;}
 }
 
@@ -45,10 +48,13 @@ string FileCacheManager::ReturnSolutionFromHashMap(string problem) {
 }
 
 void FileCacheManager::SaveSolutionInHashMap(string problem, string solution) {
+    pthread_mutex_lock(&mutex);
     solutionHashMap[problem] = solution;
+    pthread_mutex_unlock(&mutex);
 }
 
 void FileCacheManager::UpdateCacheMap(string problem, string solution) {
+    pthread_mutex_lock(&mutex);
     //if the hash map is full,delete the last used problem/solver from it and update hashMap and vector
     if(hashMapVector.size() == hashMapMaxSize) {
         //get the problem from the vector
@@ -72,10 +78,12 @@ void FileCacheManager::UpdateCacheMap(string problem, string solution) {
             hashMapVector.insert(hashMapVector.begin(), problem);
         }
     }
+    pthread_mutex_unlock(&mutex);
 
 }
 
 string FileCacheManager::ReturnSolutionFromFiles(string problem) {
+
     ifstream readFileStream;
     readFileStream.open(problem,fstream::in);
     if(!readFileStream.is_open()){
@@ -102,6 +110,8 @@ bool FileCacheManager::DoesSolutionExistsInFiles(string problem) {
 }
 
 void FileCacheManager::SaveSolutionInFiles(string problem, string solution) {
+    pthread_mutex_lock(&mutex);
+    problem = removeEOL(problem);
     ofstream writeToFileStream;
     writeToFileStream.open(problem,fstream::out);
     if(!writeToFileStream.is_open()){
@@ -110,9 +120,11 @@ void FileCacheManager::SaveSolutionInFiles(string problem, string solution) {
     }
     writeToFileStream << solution;
     writeToFileStream.close();
+    pthread_mutex_unlock(&mutex);
 }
 
 bool FileCacheManager::DoesSolutionExist(string problem){
+    problem = removeEOL(problem);
     if(DoesSolutionExistsInHashMap(problem)){
         return true;
     }
@@ -128,5 +140,15 @@ bool FileCacheManager::DoesSolutionExist(string problem){
 void FileCacheManager::SaveSolution(string problem, string solution) {
     SaveSolutionInFiles(problem,solution);
     SaveSolutionInHashMap(problem,solution);
+}
+
+string FileCacheManager::removeEOL(string str){
+    str.erase(std::remove(str.begin(), str.end(), '\n'), str.end());
+    str.erase(std::remove(str.begin(), str.end(), ','), str.end());
+    str.erase(std::remove(str.begin(), str.end(), '-'), str.end());
+    if(str.length()>255) {
+        str.erase(255, string::npos);
+    }
+    return str;
 }
 

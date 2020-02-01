@@ -32,12 +32,16 @@ void  MyParallelServer :: open(int port,ClientHandler* c){
     address.sin_family = AF_INET;
     address.sin_addr.s_addr = INADDR_ANY;
     address.sin_port = htons(port);
+    int optval = 1;
+    setsockopt(port, SOL_SOCKET, SO_REUSEPORT, &optval, sizeof(optval));
     int bind1 = bind(socketfd, (struct sockaddr *) &address, sizeof(address));
     if (bind1 == -1) {
         //error
         std:: cerr << "Could not bind the socket to an IP\n" << std:: endl;
         return;
     }
+
+
     if(listen(socketfd, SOMAXCONN) == -1){
         cerr << "Error during listening command\n" << std:: endl;
     }
