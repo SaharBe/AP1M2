@@ -12,7 +12,9 @@
 
 int main(int numArg, char *args[]) {
 
+
     double port = 8000;
+
     MyParallelServer server;
     DFS<Node> searcher;
 

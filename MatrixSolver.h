@@ -246,6 +246,10 @@ public:
 
 
 
+        while(!ans.empty()){
+            State<Node> first = ans.back();
+            ans.pop_back();
+            State<Node> second = ans.back();
 
         int numberOfSteps;
         double  tempcost;
