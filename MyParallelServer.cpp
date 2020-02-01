@@ -33,7 +33,6 @@ void  MyParallelServer :: open(int port,ClientHandler* c){
     address.sin_addr.s_addr = INADDR_ANY;
     address.sin_port = htons(port);
     int optval = 1;
-    setsockopt(port, SOL_SOCKET, SO_REUSEPORT, &optval, sizeof(optval));
     int bind1 = bind(socketfd, (struct sockaddr *) &address, sizeof(address));
     if (bind1 == -1) {
         //error
