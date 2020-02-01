@@ -16,13 +16,13 @@
 
 using namespace std;
 
-template <class T, class S>
+template <class T>
 class Searcher{
 
 protected:
 
-    virtual vector<State<T>*> MyPriorityQueue(State<T> *node) ;
-    virtual vector<State<T>*> backTrace(State<T> *node);
+
+  //  virtual vector<State<T>*> MyPriorityQueue(State<T> *node) ;
     int evaluatedNodes;
 
 
@@ -45,14 +45,13 @@ public:
      }
 
 
-  //  template<T>
-  /*  vector<State<T>*> backTrace(State<T> *s) {
+   vector<State<T>*> backTrace(State<T> *s) {
         vector<State<T> *> backTracevector;
         State<T>* state = s;
         ///enter all the back Trace to the vector
-        while (state->getCameFrom() != nullptr) {
+        while (state->getCameFrom(nullptr) != nullptr) {
             backTracevector.insert(backTracevector.begin(), s);
-            state = state->getCameFrom();
+            state = state->getCameFrom(nullptr);
         }
         ///
         if (backTracevector.empty()) {
@@ -61,8 +60,7 @@ public:
         //return all back trace
         backTracevector.insert(backTracevector.begin(), s);
         return backTracevector;
-    }*/
-
+    }
 
 
 };

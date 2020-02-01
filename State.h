@@ -5,37 +5,85 @@
 #ifndef UNTITLED_STATE_H
 #define UNTITLED_STATE_H
 
-template <typename T>
+#include "Node.h"
+#include <iostream>
+template <class T>
 class State{
 private:
-    T id;
+    T state;
+    double originalCost;
     double cost;
     State<T>* cameFrom;
 
+
+
+
 public:
 
-    State(T state){
+    State<T>(T state, double cost, State<T>* cameFrom = NULL){
         this->state = state;
         this->cost = cost;
+        this->originalCost = cost;
+        this->cameFrom = cameFrom;
+
     }
 
+    State<T>(T state){
+        this->state = state;
+    }
 
-    bool operator==(const State<T>& other)
+    State() {
+
+    }
+
+    void setCameFrom(State<T>& s) {
+        cameFrom = &s;
+    }
+
+   State<T>* getCameFrom() {
+       return cameFrom;
+    }
+    void setCost(double doub) {
+        cost = doub;
+    }
+
+    void operator=(const State& other)
     {
-        return id == other.id;
+        this->state = other.state;
+        this->cost = other.cost;
     }
 
-    bool operator<(const State<T>& other){
-        return other.cost < this->cost;
+
+    bool operator==(State other) const
+    {
+        return state == other.state;
     }
 
-    double getCost()
+    bool operator!=(State other) const
+    {
+        return state != other.state;
+    }
+
+    bool operator<(const State<T>& other) const{
+        return state < other.state;
+    }
+
+    double getCost() const
     {
         return cost;
     }
-    T getState(){
-        return id;
+    void setVisitState(bool visit) {
+        this->is_visitedNode = visit;
     }
+    T getState() const{
+        return state;
+    }
+    double getOriginalCost() const {
+        return originalCost;
+    }
+
+
+
 };
 
 

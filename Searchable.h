@@ -18,7 +18,7 @@ public:
 
  virtual State<T> getInitialState() const = 0;
  virtual State<T> getGoalState() const = 0;
- virtual std::vector<State<T>> getAllPossibleStates(const State<T>& state) const = 0;
+ virtual std::vector<State<Node>> getAllPossibleStates(const State<T>& state) const = 0;
 
 
 };

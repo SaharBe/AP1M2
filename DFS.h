@@ -7,7 +7,6 @@
 
 #include <iostream>
 #include <unordered_map>
-#include <hash_map>
 #include <vector>
 #include <list>
 
@@ -19,21 +18,21 @@
 using namespace std;
 
 
-template <class T, class S>
-class DFSSearcher: public Searcher<T>{
+template <class T>
+class DFS: public Searcher<T>{
     public:
         vector<State<T>> search (const Searchable<T>& searchable)
         {
             vector<State<T>> resultStateList;
-            resultStateList.push_back(searchable.getInitialState());
             vector<State<T>> visited;
 
             searchRec(resultStateList, searchable.getInitialState(), visited, searchable);
 
+
             return resultStateList;
         }
 
-        bool searchRec(vector<State<T>>& states, const State<T>& state, vector<State<T>>& visited, const Searchable<T>& searchable) {
+        bool searchRec(vector<State<T>>& states,  const State<T>& state, vector<State<T>>& visited,  const Searchable<T>& searchable) {
             if(state == searchable.getGoalState())
             {
                 states.push_back(state);
@@ -50,11 +49,11 @@ class DFSSearcher: public Searcher<T>{
 
                 for(int i = 0; i < possibleStates.size(); ++i)
                 {
-                    int statesCostFromPath = searchRec(states, possibleStates[i], visited, searchable);
+                    bool foundPath = searchRec(states, possibleStates[i], visited, searchable);
 
-                    if(statesCostFromPath)
+                    if(foundPath)
                     {
-                        return statesCostFromPath;
+                        return true;
                     }
                 }
 
