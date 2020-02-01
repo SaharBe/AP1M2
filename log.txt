@@ -1,0 +1,385 @@
+commit a8c514abb4bdb79a320a16df4e2545b86f0a7e09
+Merge: 81ae086 4c0ac1d
+Author: EyalBrilling <43183029+EyalBrilling@users.noreply.github.com>
+Date:   Sat Feb 1 21:05:38 2020 +0200
+
+    Merge pull request #13 from SaharBe/eyal
+    
+    Add files via upload
+
+commit 4c0ac1d4793c2d2a4991e5962a667bf5c4eeb419
+Author: EyalBrilling <43183029+EyalBrilling@users.noreply.github.com>
+Date:   Sat Feb 1 21:05:14 2020 +0200
+
+    Add files via upload
+
+commit 81ae0869fc4c2d9393396ca720b822d3f74ddc11
+Merge: 9ab6fa2 79367d2
+Author: EyalBrilling <43183029+EyalBrilling@users.noreply.github.com>
+Date:   Sat Feb 1 20:53:26 2020 +0200
+
+    Merge pull request #12 from SaharBe/eyal
+    
+    Add files via upload
+
+commit 79367d26f320a7508c657aee9bdcb5fa324f47d1
+Author: EyalBrilling <43183029+EyalBrilling@users.noreply.github.com>
+Date:   Sat Feb 1 20:53:00 2020 +0200
+
+    Add files via upload
+
+commit 9ab6fa2eeac467af4965f308b5c2a2f5977a57a8
+Merge: 33a534d 6147e7b
+Author: EyalBrilling <43183029+EyalBrilling@users.noreply.github.com>
+Date:   Sat Feb 1 14:29:16 2020 +0200
+
+    Merge pull request #11 from SaharBe/eyal
+    
+    fixed parallel server and cache manager files
+
+commit 6147e7b1ecd9e73606df710471f13f9508f74f1e
+Merge: ddc27a2 33a534d
+Author: EyalBrilling <43183029+EyalBrilling@users.noreply.github.com>
+Date:   Sat Feb 1 14:28:43 2020 +0200
+
+    Merge branch 'master' into eyal
+
+commit ddc27a2370bdf2d6d81ac1441b659cd479ca37c1
+Author: EyalBrilling <43183029+EyalBrilling@users.noreply.github.com>
+Date:   Sat Feb 1 14:24:49 2020 +0200
+
+    Add files via upload
+
+commit 33a534d7b6f628b1c3be800b099e9499815901ef
+Author: EyalBrilling <43183029+EyalBrilling@users.noreply.github.com>
+Date:   Sat Feb 1 02:52:17 2020 +0200
+
+    Add files via upload
+
+commit bd125d45b1ffd42d5ab68cbdda9bf19e7ff7486e
+Merge: ea29a6a b5c7d16
+Author: EyalBrilling <43183029+EyalBrilling@users.noreply.github.com>
+Date:   Sat Feb 1 01:11:53 2020 +0200
+
+    Merge pull request #10 from SaharBe/eyal
+    
+    fixed clienthandler and server bugs
+
+commit b5c7d1648903344d3cde29264a93459c10e76d2d
+Author: EyalBrilling <43183029+EyalBrilling@users.noreply.github.com>
+Date:   Sat Feb 1 01:11:09 2020 +0200
+
+    Add files via upload
+
+commit ea29a6a1af1fcc536281ca1044f6150e0e0489db
+Merge: b7f6147 8ab1701
+Author: EyalBrilling <43183029+EyalBrilling@users.noreply.github.com>
+Date:   Sat Feb 1 01:08:56 2020 +0200
+
+    Merge pull request #9 from SaharBe/eyal
+    
+    fixed clientHandler and server bugs
+
+commit 8ab1701723e5e6820fc4f847c4f12f98eb91ce31
+Merge: 6f80bbd b7f6147
+Author: EyalBrilling <43183029+EyalBrilling@users.noreply.github.com>
+Date:   Sat Feb 1 01:08:03 2020 +0200
+
+    Merge branch 'master' into eyal
+
+commit 6f80bbd8a76988bf4d57ef0d354fd255e237baed
+Author: EyalBrilling <43183029+EyalBrilling@users.noreply.github.com>
+Date:   Sat Feb 1 00:59:55 2020 +0200
+
+    fixing server and client bugs
+
+commit b7f6147f8e8d9cb693fe08a157bb37626edf38fb
+Author: SaharBe <57907970+SaharBe@users.noreply.github.com>
+Date:   Fri Jan 31 18:47:38 2020 +0200
+
+    Add files via upload
+
+commit 76b22f675d75734856b60e01cf325e34258d21f9
+Author: EyalBrilling <43183029+EyalBrilling@users.noreply.github.com>
+Date:   Fri Jan 31 18:11:34 2020 +0200
+
+    Update README.md
+
+commit c3e52de0c8c16984c720b7079fb62c4e650eee55
+Author: EyalBrilling <43183029+EyalBrilling@users.noreply.github.com>
+Date:   Fri Jan 31 18:11:14 2020 +0200
+
+    Update README.md
+
+commit d30e801c043c794d8c2a73e92d89eadc77063b8e
+Author: EyalBrilling <43183029+EyalBrilling@users.noreply.github.com>
+Date:   Fri Jan 31 18:06:04 2020 +0200
+
+    Update README.md
+
+commit 5fef2819548f13c2356c48571acd62802b87287a
+Author: EyalBrilling <43183029+EyalBrilling@users.noreply.github.com>
+Date:   Fri Jan 31 18:05:41 2020 +0200
+
+    updated readme
+
+commit 881504e2c5210c90fe436b02e13efa1487739aaf
+Author: SaharBe <57907970+SaharBe@users.noreply.github.com>
+Date:   Fri Jan 31 15:23:32 2020 +0200
+
+    Add files via upload
+
+commit a3f01306cb0f1d409ddbe364c8c9fb07acafa74f
+Author: SaharBe <57907970+SaharBe@users.noreply.github.com>
+Date:   Thu Jan 30 23:53:57 2020 +0200
+
+    Add files via upload
+
+commit a89a86a64310c80b14d1ce41afb57b0b5dfc1ca1
+Author: SaharBe <57907970+SaharBe@users.noreply.github.com>
+Date:   Thu Jan 30 23:52:51 2020 +0200
+
+    Add files via upload
+
+commit 6d1fccc6884678520946badbf921f985d182951c
+Author: SaharBe <57907970+SaharBe@users.noreply.github.com>
+Date:   Wed Jan 29 22:41:01 2020 +0200
+
+    Delete BreadthFirstSearch.h
+
+commit 81b4e40df87405e35eb7a1a1693a7e11647498cf
+Author: SaharBe <57907970+SaharBe@users.noreply.github.com>
+Date:   Wed Jan 29 22:40:20 2020 +0200
+
+    Add files via upload
+
+commit db3745b1e79bac64e96aa65971973832c3112301
+Author: EyalBrilling <43183029+EyalBrilling@users.noreply.github.com>
+Date:   Wed Jan 29 22:33:48 2020 +0200
+
+    Add files via upload
+
+commit 2b2baf897a994307dea665562b69f28e5286cba6
+Author: EyalBrilling <43183029+EyalBrilling@users.noreply.github.com>
+Date:   Wed Jan 29 19:30:32 2020 +0200
+
+    fixed myTestClient
+
+commit 2d8aca469e913d2ac1630f8fa07e10229b9f72e2
+Author: EyalBrilling <43183029+EyalBrilling@users.noreply.github.com>
+Date:   Wed Jan 29 19:23:11 2020 +0200
+
+    Add files via upload
+
+commit aa80730fb70fabbca94d3a594909c597f0b770fe
+Author: SaharBe <57907970+SaharBe@users.noreply.github.com>
+Date:   Tue Jan 28 13:21:40 2020 +0200
+
+    Add files via upload
+
+commit 9746c493971132c7d7a1bd1a6e55419175352896
+Author: EyalBrilling <43183029+EyalBrilling@users.noreply.github.com>
+Date:   Tue Jan 28 11:50:31 2020 +0200
+
+    Update MyParallelServer.h
+
+commit 840eaa9c694576ae55e42c90a46a6daf7bde7f22
+Author: EyalBrilling <43183029+EyalBrilling@users.noreply.github.com>
+Date:   Tue Jan 28 11:49:20 2020 +0200
+
+    added parallelServer and tweaking serial server
+
+commit 41e5a9ee1b91982b000331e573f178442aad3c10
+Author: SaharBe <57907970+SaharBe@users.noreply.github.com>
+Date:   Mon Jan 27 23:54:50 2020 +0200
+
+    Add files via upload
+
+commit 0d0ec9ddb21d5de795bf1a268a4e7485ec3d36bc
+Merge: be36c41 60f6545
+Author: SaharBe <57907970+SaharBe@users.noreply.github.com>
+Date:   Mon Jan 27 20:10:09 2020 +0200
+
+    Merge pull request #8 from SaharBe/sahar
+    
+    Add files via upload
+
+commit 60f6545c60345c953d59f6ea873cafd787d1ed45
+Merge: c205e03 1111ef0
+Author: SaharBe <57907970+SaharBe@users.noreply.github.com>
+Date:   Mon Jan 27 20:09:42 2020 +0200
+
+    Merge branch 'master' into sahar
+
+commit be36c412439e8106cabd20118c615a7232e64b06
+Merge: 1111ef0 0fb4456
+Author: EyalBrilling <43183029+EyalBrilling@users.noreply.github.com>
+Date:   Mon Jan 27 19:59:19 2020 +0200
+
+    added FilecacheManager
+    
+    added FilecacheManager
+
+commit 0fb44565e520bc7973531fedd73a91b146e122d8
+Merge: 767f99a 1111ef0
+Author: EyalBrilling <43183029+EyalBrilling@users.noreply.github.com>
+Date:   Mon Jan 27 19:58:55 2020 +0200
+
+    Merge branch 'master' into eyal
+
+commit c205e038a96b759e87a618662630ff50b3b24373
+Author: SaharBe <57907970+SaharBe@users.noreply.github.com>
+Date:   Mon Jan 27 19:55:05 2020 +0200
+
+    Add files via upload
+
+commit 767f99a49557fac404ac51bed804ae24cb6e8626
+Author: EyalBrilling <43183029+EyalBrilling@users.noreply.github.com>
+Date:   Mon Jan 27 19:54:18 2020 +0200
+
+    Add files via upload
+
+commit 1111ef05c5cc074856bac0bf9ed2ba86ff35ebdc
+Author: SaharBe <57907970+SaharBe@users.noreply.github.com>
+Date:   Sun Jan 26 00:27:01 2020 +0200
+
+    Add files via upload
+
+commit eec48f028814ac0f322fd15de61114b592f7e9b9
+Author: SaharBe <57907970+SaharBe@users.noreply.github.com>
+Date:   Sat Jan 25 20:13:53 2020 +0200
+
+    Add files via upload
+
+commit 4146ecc70e21a192174e2ecc4168e7e2e7a425ab
+Merge: c002173 e6a845e
+Author: SaharBe <57907970+SaharBe@users.noreply.github.com>
+Date:   Sat Jan 25 17:44:41 2020 +0200
+
+    Merge pull request #6 from SaharBe/sahar
+    
+    Sahar
+
+commit e6a845edd832d99991e8209c603a5103dcecb8a6
+Merge: 1a58582 c002173
+Author: SaharBe <57907970+SaharBe@users.noreply.github.com>
+Date:   Sat Jan 25 17:44:28 2020 +0200
+
+    Merge branch 'master' into sahar
+
+commit 1a58582f39f737ddfdeda36f8b818f9aed281e79
+Author: SaharBe <57907970+SaharBe@users.noreply.github.com>
+Date:   Sat Jan 25 17:35:46 2020 +0200
+
+    Add files via upload
+
+commit c002173d0d11076cf45f973cff8415c86a3fa78b
+Merge: b8ec1bc 85cc3ba
+Author: SaharBe <57907970+SaharBe@users.noreply.github.com>
+Date:   Sat Jan 25 17:32:24 2020 +0200
+
+    Merge pull request #4 from SaharBe/eyal
+    
+    Eyal
+
+commit 85cc3bab7f6256cafa3cb0772dacbd4f3d8b20c9
+Merge: 7620d57 b8ec1bc
+Author: SaharBe <57907970+SaharBe@users.noreply.github.com>
+Date:   Sat Jan 25 17:32:06 2020 +0200
+
+    Merge branch 'master' into eyal
+
+commit 7620d57a6fbf5c38f12c6ecc68c3a3ea139edd63
+Author: EyalBrilling <43183029+EyalBrilling@users.noreply.github.com>
+Date:   Fri Jan 24 02:22:47 2020 +0200
+
+    no need for the cpp
+
+commit 6616da9c20b1d2eaed1f85ee1a6372e500df6d7a
+Author: EyalBrilling <43183029+EyalBrilling@users.noreply.github.com>
+Date:   Fri Jan 24 02:21:48 2020 +0200
+
+    template support changes
+    
+    -added template support to cacheManager and clientHandler
+
+commit 66b192138c6cf9194fc28a0d35a29f65510b0886
+Author: SaharBe <57907970+SaharBe@users.noreply.github.com>
+Date:   Thu Jan 23 22:33:36 2020 +0200
+
+    Add files via upload
+
+commit 9e9c944bb03d68b420c233c5431c25c8bf3be1bd
+Author: SaharBe <57907970+SaharBe@users.noreply.github.com>
+Date:   Thu Jan 23 19:13:40 2020 +0200
+
+    Add files via upload
+
+commit b8ec1bcfe78f9688e4a16ae31fe9edb31d083298
+Merge: 07af4d9 624b901
+Author: SaharBe <57907970+SaharBe@users.noreply.github.com>
+Date:   Wed Jan 22 22:24:07 2020 +0200
+
+    Merge pull request #3 from SaharBe/sahar
+    
+    Add files via upload
+
+commit 624b9011700ce777be2d646bbd5acc45857a451e
+Merge: 492c2ec 07af4d9
+Author: SaharBe <57907970+SaharBe@users.noreply.github.com>
+Date:   Wed Jan 22 22:22:38 2020 +0200
+
+    Merge branch 'master' into sahar
+
+commit 492c2ec6b3625a6938801a9264bd4ce7d4fddc9a
+Author: SaharBe <57907970+SaharBe@users.noreply.github.com>
+Date:   Wed Jan 22 22:11:41 2020 +0200
+
+    Add files via upload
+    
+    working on the server side
+
+commit 07af4d96e335b43b7233550e7aa5f789ffa2de9c
+Author: EyalBrilling <43183029+EyalBrilling@users.noreply.github.com>
+Date:   Wed Jan 22 06:07:52 2020 +0200
+
+    finished the cache and started the client handler
+
+commit 47c9ad84d4fc5861fac8547b13639e4f963759a4
+Author: EyalBrilling <43183029+EyalBrilling@users.noreply.github.com>
+Date:   Wed Jan 22 06:04:09 2020 +0200
+
+    Add files via upload
+
+commit 894cd87b7f8e68f6c8a4ad9a29ef2c041b96c7bb
+Author: SaharBe <57907970+SaharBe@users.noreply.github.com>
+Date:   Mon Jan 20 21:38:52 2020 +0200
+
+    Add files via upload
+
+commit 23bdc876e343f6fb70446e3a58e917a5f2fcc02a
+Merge: c63be43 626f9e6
+Author: SaharBe <57907970+SaharBe@users.noreply.github.com>
+Date:   Mon Jan 20 21:36:14 2020 +0200
+
+    Merge pull request #1 from SaharBe/sahar
+    
+    Update README.md
+
+commit 626f9e6881dc6c7f5528f6251ee2f1d615dca5f3
+Author: SaharBe <57907970+SaharBe@users.noreply.github.com>
+Date:   Mon Jan 20 21:35:11 2020 +0200
+
+    Update README.md
+
+commit c63be4301fe6d01eefdd86edc50f902983baf528
+Author: EyalBrilling <43183029+EyalBrilling@users.noreply.github.com>
+Date:   Mon Jan 20 21:25:57 2020 +0200
+
+    Update README.md
+
+commit 3f36cff741d42c35fdf7a89d06260eda9166ce84
+Author: SaharBe <57907970+SaharBe@users.noreply.github.com>
+Date:   Mon Jan 20 21:18:31 2020 +0200
+
+    Initial commit
