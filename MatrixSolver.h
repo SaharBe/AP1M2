@@ -232,7 +232,7 @@ public:
 
 
         vector<State<Node>> ans = searcher->search(*matrix);
-        static double costAll = 0;
+         double costAll = 0;
 
         string solution = "";
         string temp = "";
@@ -244,15 +244,18 @@ public:
         }
 
 
-        State<Node> first = ans.back();
-        mat.pop_back();
-        State<Node> second = ans.back();
-
-        int i;
 
 
 
-        for(i =0; i < ans.size() ; i++){
+        int numberOfSteps;
+        double  tempcost;
+
+        while(!ans.empty()){
+            State<Node> first = ans.back();
+            ans.pop_back();
+            State<Node> second = ans.back();
+            numberOfSteps++;
+
 
             Node a  = first.getState();
             Node b  = second.getState().upNode();
@@ -263,28 +266,37 @@ public:
 
             if(a.operator==(b)){
                 temp = solution;
-                solution =  ",Down (" + to_string(costAll) + ")" +temp;
+                solution =  ",Up (" + to_string(costAll) + ") " +temp;
 
-                costAll = costAll - first.getCost();
+                tempcost = costAll;
+                costAll = tempcost - first.getCost();
+
             }
             else if(a.operator==(c)){
                 temp = solution;
-                solution =  ",Up (" + to_string(costAll) + ")" +temp;
+                solution =  ",Down (" + to_string(costAll) + ") " +temp;
 
+                tempcost = costAll;
                 costAll = costAll - first.getCost();
+
             }else if(a.operator==(d)){
                 temp = solution;
-                solution =  ",Left (" + to_string(costAll) + ")" +temp;
+                solution =  ",Right (" + to_string(costAll) + ") " +temp;
 
+                tempcost = costAll;
                 costAll = costAll - first.getCost();
+
             }else if(a.operator==(e)){
                 temp = solution;
-                solution =  ",Right (" + to_string(costAll) + ")" +temp;
+                solution =  ",Left (" + to_string(costAll) + ") " +temp;
 
+                tempcost = costAll;
                 costAll = costAll - first.getCost();
+
             } else{
                 cerr << "error" << endl;
             }
+
         }
 
 

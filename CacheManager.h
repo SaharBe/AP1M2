@@ -27,10 +27,12 @@ public:
 
 class FileCacheManager: public CacheManager<string,string> {
 public:
+    pthread_mutex_t mutex;
     std::unordered_map<string, string> solutionHashMap;
     vector<string> hashMapVector;
     int hashMapMaxSize = 10;
 
+    string removeEOL(string str);
 
     virtual bool DoesSolutionExist(string problem);
 
@@ -56,6 +58,8 @@ public:
     void SaveSolutionInFiles(string problem, string solution);
 
     void SaveSolutionInHashMap(string problem, string solution);
+
+
 
 
 };
