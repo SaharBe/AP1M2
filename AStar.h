@@ -6,12 +6,9 @@
 #define UNTITLED_ASTAR_H
 
 
-
 #include "BestFS.h"
-
 #include "State.h"
 #include "Node.h"
-
 
 
 class Heuristic {
@@ -38,9 +35,6 @@ public:
     }
 };
 
-protected:
-    virtual double costBetweenNodes(State<T> *start, State<T> *end) const {
-
 
 class AStar : public BestFS<Node>{
     Distance distance;
@@ -60,7 +54,6 @@ public:
     virtual vector<State<Node>> search (const Searchable<Node>& searchable) {
         distance.setGoal(searchable.getGoalState());
         return BestFS<Node>::search(searchable);
-
     }
 };
 
