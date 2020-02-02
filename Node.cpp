@@ -7,13 +7,11 @@
 
 Node Node::upNode() {
     return Node(this->x , this->y -1, cols);
-
 }
 
 Node Node::downNode() {
 
     return Node(this->x, this->y +1, cols);
-
 }
 
 Node Node::rightNode() {

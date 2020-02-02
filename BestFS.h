@@ -24,12 +24,12 @@ public:
 
 
 
-  vector<State<Node>> backTrace(State<Node> s, map<State<T>, State<T>>& cameFrom) {
+  vector<State<Node>> backTrace(State<Node> s, map<State<T>, State<T>>& cameFrom,State<T> initialState) {
 
           vector<State<Node> > backTracevector;
           State<Node>& state = s;
           ///enter all the back Trace to the vector
-          while (cameFrom[state] != state) {
+          while (state != initialState) {
               backTracevector.insert(backTracevector.begin(), state);
               state = cameFrom[state];
           }
@@ -79,7 +79,7 @@ public:
         map<State<T>, State<T>> cameFrom;
         open.push(searchable.getInitialState());
         set <State<Node>> closed;
-
+        State<Node> p =        searchable.getInitialState();
         cameFrom[searchable.getInitialState()] = searchable.getInitialState();
 
         while (!open.empty()) {
@@ -87,7 +87,7 @@ public:
             closed.insert(n);
             open.pop();
             if (n == searchable.getGoalState()) {
-                return backTrace(n, cameFrom);; //backTrace(searchable.getGoalState());
+                return backTrace(n, cameFrom, searchable.getInitialState());; //backTrace(searchable.getGoalState());
               cout << n.getCost()<< endl;
             }
             vector<State<Node>> successor = searchable.getAllPossibleStates(n);
