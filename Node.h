@@ -1,6 +1,3 @@
-//
-// Created by sahar on 25/01/2020.
-//
 
 #ifndef UNTITLED_NODE_H
 #define UNTITLED_NODE_H

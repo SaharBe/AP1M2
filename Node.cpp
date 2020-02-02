@@ -1,6 +1,3 @@
-//
-// Created by sahar on 25/01/2020.
-//
 
 #include "Node.h"
 #include "State.h"

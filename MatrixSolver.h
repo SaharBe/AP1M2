@@ -1,6 +1,4 @@
-//
-// Created by sahar on 26/01/2020.
-//
+
 
 #ifndef UNTITLED_MATRIXSOLVER_H
 #define UNTITLED_MATRIXSOLVER_H

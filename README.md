@@ -1,5 +1,7 @@
 problem-solver server template
 
+https://github.com/SaharBe/AP1M2
+
 The code in this project build a server that waits for clients,reads problems from them,solves the problem and returns the answer.
 the sturcture of the code is built in a way that allow you to change between different implemitions, and even enables you to make your own.
 to make this possible,each part of the code handles different functions in a certain area.we implemented them in the generic way based on the SOLID fundamentals.

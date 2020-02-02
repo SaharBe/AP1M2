@@ -1,6 +1,3 @@
-//
-// Created by sahar on 22/01/2020.
-//
 
 #ifndef UNTITLED_ASTAR_H
 #define UNTITLED_ASTAR_H

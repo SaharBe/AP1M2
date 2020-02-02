@@ -1,6 +1,4 @@
-//
-// Created by sahar on 24/01/2020.
-//
+
 
 #ifndef UNTITLED_MATRIX_H
 #define UNTITLED_MATRIX_H

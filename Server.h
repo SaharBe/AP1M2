@@ -1,6 +1,4 @@
-//
-// Created by sahar on 21/01/2020.
-//
+
 
 #ifndef UNTITLED_SERVER_H
 #define UNTITLED_SERVER_H

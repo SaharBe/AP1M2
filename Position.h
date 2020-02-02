@@ -1,6 +1,4 @@
-//
-// Created by sahar on 29/01/2020.
-//
+
 
 #ifndef UNTITLED_POSITION_H
 #define UNTITLED_POSITION_H

@@ -1,6 +1,3 @@
-//
-// Created by sahar on 29/01/2020.
-//
 
 #ifndef UNTITLED_COSTCOMPARATOR_H
 #define UNTITLED_COSTCOMPARATOR_H

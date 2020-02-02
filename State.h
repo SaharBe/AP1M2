@@ -1,6 +1,3 @@
-//
-// Created by sahar on 21/01/2020.
-//
 
 #ifndef UNTITLED_STATE_H
 #define UNTITLED_STATE_H

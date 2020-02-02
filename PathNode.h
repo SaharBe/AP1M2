@@ -1,6 +1,4 @@
-//
-// Created by sahar on 25/01/2020.
-//
+
 
 #ifndef UNTITLED_PATHNODE_H
 #define UNTITLED_PATHNODE_H
