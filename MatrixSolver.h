@@ -77,16 +77,17 @@ public:
                 colsCounter++;
             }
         }
+        colsCounter++;
 
         return colsCounter;
     }
 
     Node createNode(string str){
-      /**  if(str[0] == '(')
-            str.erase(str.begin());
-        if(str[str.size() - 1] ==  ')'){
-            str.pop_back();
-        }**/
+        /**  if(str[0] == '(')
+              str.erase(str.begin());
+          if(str[str.size() - 1] ==  ')'){
+              str.pop_back();
+          }**/
         int i = 0;
         string x = "";
         string y = "";
@@ -101,7 +102,7 @@ public:
         }
         int Y = stoi(y);
 
-        Node* node = new Node(X, Y);
+        Node* node = new Node(X, Y, rows);
 
         return *node;
 
@@ -192,7 +193,7 @@ public:
 
                 }
                 cost = stoi(value);
-                Node node(j, i);
+                Node node(j, i, cols);
                 if(node == start){
                     initi=State<Node>(node, cost);
                     line.push_back(initi);
@@ -221,7 +222,8 @@ public:
     }
 
 
-  virtual string solve(string problem){
+
+    virtual string solve(string problem){
 
         createMatrix(problem);
         vector<string> vec = createVectorOfstrings(problem,rows);
@@ -231,22 +233,23 @@ public:
 
 
         vector<State<Node>> ans = searcher->search(*matrix);
-        double costAll = 0;
+        int costAll = 0;
 
         string solution = "";
         string temp = "";
 
-
+        int i;
 
         for(State<Node> s : ans){
             costAll+= s.getCost();
+            i++;
         }
 
 
 
 
-        int i;
-        double  tempcost;
+
+        int tempcost;
 
         while(!ans.empty()){
             State<Node> first = ans.back();
@@ -305,7 +308,6 @@ public:
     }
 
 };
-
 
 
 #endif //UNTITLED_MATRIXSOLVER_H

@@ -1,6 +1,3 @@
-//
-// Created by sahar on 22/01/2020.
-//
 
 #ifndef UNTITLED_BFS_H
 #define UNTITLED_BFS_H
@@ -32,7 +29,7 @@ class BFS: public Searcher<T> {
         while(!stateQueue.empty()) {
             State<T> curState = stateQueue.front();
             stateQueue.pop();
-         //orig here visiteed
+         //orig here visited
 
             if ( curState != searchable.getGoalState()) {
                 vector<State<T>> possibleStates = searchable.getAllPossibleStates(curState);
