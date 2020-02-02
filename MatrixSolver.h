@@ -295,7 +295,7 @@ public:
                 costAll = costAll - first.getCost();
 
             } else{
-                cerr << "error" << endl;
+
             }
 
         }

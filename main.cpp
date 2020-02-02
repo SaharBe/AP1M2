@@ -11,10 +11,17 @@
 
 
 int main(int numArg, char *args[]) {
+    int port;
+    if(numArg==2){
+        port = stod(args[1]);
+    }
+    else{
+        port = 5600;
+    }
 
-    double port = 8006;
+
     MyParallelServer server;
-    DFS<Node> searcher;
+    BFS<Node> searcher;
 
 
 
@@ -22,7 +29,6 @@ int main(int numArg, char *args[]) {
 
 
     server.open(port, new MyClientHandler(new MatrixSolver(&searcher), new FileCacheManager));
-        //this_thread::sleep_for(chrono::milliseconds(100000));
         server.stop(port);
 
 

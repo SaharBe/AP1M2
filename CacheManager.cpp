@@ -42,7 +42,7 @@ string FileCacheManager::ReturnSolutionFromHashMap(string problem) {
         return iterator->second;
     }
     else{
-        throw std::invalid_argument("error.couldnt find solution in map(returnSolutionFromHashMap)");
+        throw std::invalid_argument("error.couldn`t find solution in map(returnSolutionFromHashMap)");
     }
 
 }
