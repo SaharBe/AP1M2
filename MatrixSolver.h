@@ -221,8 +221,7 @@ public:
     }
 
 
-
-    virtual string solve(string problem){
+  virtual string solve(string problem){
 
         createMatrix(problem);
         vector<string> vec = createVectorOfstrings(problem,rows);
@@ -232,7 +231,7 @@ public:
 
 
         vector<State<Node>> ans = searcher->search(*matrix);
-         double costAll = 0;
+        double costAll = 0;
 
         string solution = "";
         string temp = "";
@@ -246,19 +245,14 @@ public:
 
 
 
-        while(!ans.empty()){
-            State<Node> first = ans.back();
-            ans.pop_back();
-            State<Node> second = ans.back();
-
-        int numberOfSteps;
+        int i;
         double  tempcost;
 
         while(!ans.empty()){
             State<Node> first = ans.back();
             ans.pop_back();
             State<Node> second = ans.back();
-            numberOfSteps++;
+
 
 
             Node a  = first.getState();
@@ -311,6 +305,7 @@ public:
     }
 
 };
+
 
 
 #endif //UNTITLED_MATRIXSOLVER_H
